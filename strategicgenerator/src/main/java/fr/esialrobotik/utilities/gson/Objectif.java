@@ -29,6 +29,14 @@ public class Objectif {
     /**
      * Génère les tâches mirroirs à partie d'une liste
      * @param tacheMirroir
+     */
+    public void generateMirror(List<Tache> tacheMirroir) throws Exception {
+        this.generateMirror(tacheMirroir, new ArrayList<>());
+    }
+
+    /**
+     * Génère les tâches mirroirs à partie d'une liste
+     * @param tacheMirroir
      * @param tacheSpecifique
      */
     public void generateMirror(List<Tache> tacheMirroir, List<Tache> tacheSpecifique) throws Exception {

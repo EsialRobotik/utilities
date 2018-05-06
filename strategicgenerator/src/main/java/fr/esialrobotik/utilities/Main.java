@@ -17,40 +17,41 @@ import java.util.List;
 public class Main {
 
     public static void main(String... arg) {
-        System.out.println("Hello world");
+        System.out.println("Génération de la stratégie");
 
-        Tache tache1 = new Tache("go position 1", 1, 320, 930, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY);
-        Tache tache2 = new Tache("alignement", 2, 600, 1000, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY);
-        Tache tache3 = new Tache("specific", 3, 420, 1000, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.SPECIFIC);
-        Tache tache4 = new Tache("no mirror", 4, 1000, 1000, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.NONE);
-        List<Tache> tachesO1C0 = new ArrayList<>();
-        tachesO1C0.add(tache1);
-        tachesO1C0.add(tache2);
-        tachesO1C0.add(tache3);
-        tachesO1C0.add(tache4);
+        Tache tache1 = new Tache("go position cube départ", 1, 1000, 850, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY);
+        Tache tache2 = new Tache("déplacement bloc zone de départ", 2, 300, 850, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY);
+//        Tache tache3 = new Tache("specific", 3, 420, 1000, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.SPECIFIC);
+//        Tache tache4 = new Tache("no mirror", 4, 1000, 1000, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.NONE);
+        List<Tache> tachesBlocsDepart = new ArrayList<>();
+        tachesBlocsDepart.add(tache1);
+        tachesBlocsDepart.add(tache2);
+//        tachesO1C0.add(tache3);
+//        tachesO1C0.add(tache4);
 
-        Objectif objectifCouleur0 = new Objectif("Objectif 1", 1, 42, 42, tachesO1C0);
+        Objectif objectifBlocsDepart0 = new Objectif("Bloc zone de départ", 1, 5, 1, tachesBlocsDepart);
 
-        List<Objectif> objectifsC0 = new ArrayList<>();
-        objectifsC0.add(objectifCouleur0);
+        List<Objectif> objectifsCouleur0 = new ArrayList<>();
+        objectifsCouleur0.add(objectifBlocsDepart0);
 
-        Objectif objectifCouleur3000 = new Objectif("Objectif 1", 1, 42, 42, null);
-        Tache tache3Couleur3000 = new Tache("specific", 3, 420, 500, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.SPECIFIC);
-        List<Tache> tachesSpecific = new ArrayList<>();
-        tachesSpecific.add(tache3Couleur3000);
+        Objectif objectifBlocsDepart3000 = new Objectif("Bloc zone de départ", 1, 5, 1, null);
+//        Tache tache3Couleur3000 = new Tache("specific", 3, 420, 500, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.SPECIFIC);
+//        List<Tache> tachesSpecific = new ArrayList<>();
+//        tachesSpecific.add(tache3Couleur3000);
 
         try {
-            objectifCouleur3000.generateMirror(objectifCouleur0.taches, tachesSpecific);
+//            objectifBlocsDepart3000.generateMirror(objectifBlocsDepart0.taches, tachesSpecific);
+            objectifBlocsDepart3000.generateMirror(objectifBlocsDepart0.taches);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        List<Objectif> objectifsC3000 = new ArrayList<>();
-        objectifsC3000.add(objectifCouleur3000);
+        List<Objectif> objectifsCouleur3000 = new ArrayList<>();
+        objectifsCouleur3000.add(objectifBlocsDepart3000);
 
         Strategie strat = new Strategie();
-        strat.couleur0 = objectifsC0;
-        strat.couleur3000 = objectifsC3000;
+        strat.couleur0 = objectifsCouleur0;
+        strat.couleur3000 = objectifsCouleur3000;
 
         System.out.println(strat.toString());
 
@@ -60,7 +61,7 @@ public class Main {
         System.out.println("#########################");
         System.out.println(gson.toJson(strat));
 
-        try (PrintWriter jsonFile = new PrintWriter("test.json")) {
+        try (PrintWriter jsonFile = new PrintWriter("configCollection.json")) {
             jsonFile.println(gson.toJson(strat));
         } catch (FileNotFoundException e) {
             e.printStackTrace();

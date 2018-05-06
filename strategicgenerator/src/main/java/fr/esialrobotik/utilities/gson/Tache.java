@@ -1,12 +1,16 @@
 package fr.esialrobotik.utilities.gson;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by franc on 27/04/2018.
  */
 public class Tache {
 
     public enum Type {
+        @SerializedName("deplacement")
         DEPLACEMENT("deplacement"),
+        @SerializedName("manipulation")
         MANIPULATION("manipulation")
         ;
 
@@ -29,8 +33,11 @@ public class Tache {
     }
 
     public enum SubType {
+        @SerializedName("go")
         GO("go"),
+        @SerializedName("goto")
         GOTO("goto"),
+        @SerializedName("face")
         FACE("face")
         ;
 
