@@ -38,7 +38,9 @@ public class Tache {
         @SerializedName("goto")
         GOTO("goto"),
         @SerializedName("face")
-        FACE("face")
+        FACE("face"),
+        @SerializedName("goto_back")
+        GOTO_BACK("goto_back")
         ;
 
         private final String text;
@@ -69,6 +71,7 @@ public class Tache {
     public int id;
     public int positionX;
     public int positionY;
+    public int dist;
     public Type type;
     public SubType subtype;
     public int actionId;
@@ -85,6 +88,16 @@ public class Tache {
         this.mirror = mirror;
     }
 
+    public Tache(String desc, int id, int dist, Type type, SubType subtype, int actionId, Mirror mirror) {
+        this.desc = desc;
+        this.id = id;
+        this.dist = dist;
+        this.type = type;
+        this.subtype = subtype;
+        this.actionId = actionId;
+        this.mirror = mirror;
+    }
+
     public Tache() {
     }
 
@@ -93,6 +106,7 @@ public class Tache {
         this.id = t.id;
         this.positionX = t.positionX;
         this.positionY = t.positionY;
+        this.dist = t.dist;
         this.type = t.type;
         this.subtype = t.subtype;
         this.actionId = t.actionId;
@@ -106,6 +120,7 @@ public class Tache {
                 ", id=" + id +
                 ", positionX=" + positionX +
                 ", positionY=" + positionY +
+                ", dist=" + dist +
                 ", type=" + type +
                 ", subtype=" + subtype +
                 ", actionId=" + actionId +
