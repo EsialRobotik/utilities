@@ -10,7 +10,7 @@
           "desc": "sortie de la zone de départ vers objetif 1",
           "id": 1,
           "positionX": 1000,
-          "positionY": 850,
+          "positionY": 870,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto",
@@ -100,8 +100,28 @@
           "mirror": "MIRRORY"
         },
         {
-          "desc": "On recule pour se dégager",
+          "desc": "Préparation allumage interrupteur",
           "id": 4,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 12,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Allumage interrupteur",
+          "id": 5,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 13,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "On recule pour se dégager",
+          "id": 6,
           "positionX": 0,
           "positionY": 0,
           "dist": -200,
@@ -121,7 +141,7 @@
         {
           "desc": "Go position séquence abeille",
           "id": 1,
-          "positionX": 1788,
+          "positionX": 1800,
           "positionY": 219,
           "dist": 0,
           "type": "deplacement",
@@ -132,7 +152,7 @@
         {
           "desc": "Alignement pour lancement abeille",
           "id": 2,
-          "positionX": 1788,
+          "positionX": 1800,
           "positionY": 3000,
           "dist": 0,
           "type": "deplacement",
@@ -143,7 +163,7 @@
         {
           "desc": "Mise en position lancement abeille",
           "id": 3,
-          "positionX": 1788,
+          "positionX": 1800,
           "positionY": 134,
           "dist": 0,
           "type": "deplacement",
@@ -152,15 +172,172 @@
           "mirror": "MIRRORY"
         },
         {
-          "desc": "Lancement abeille",
+          "desc": "Abaissement bras",
           "id": 4,
-          "positionX": 1788,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 1,
+          "mirror": "SPECIFIC"
+        },
+        {
+          "desc": "Lancement abeille",
+          "id": 5,
+          "positionX": 1800,
           "positionY": 334,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto",
           "actionId": -1,
           "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Rentrer bras",
+          "id": 6,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 0,
+          "mirror": "SPECIFIC"
+        }
+      ]
+    },
+    {
+      "desc": "Cubes réservoir",
+      "id": 5,
+      "points": 5,
+      "priorite": 1,
+      "taches": [
+        {
+          "desc": "Go position cubes réservoir",
+          "id": 1,
+          "positionX": 1400,
+          "positionY": 200,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go sur les cubes réservoir",
+          "id": 2,
+          "positionX": 600,
+          "positionY": 600,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Alignement pour déposer les cubes réservoir",
+          "id": 3,
+          "positionX": 0,
+          "positionY": 600,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "face",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Déposer des cubes réservoir",
+          "id": 4,
+          "positionX": 270,
+          "positionY": 600,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "On se dégage",
+          "id": 5,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": -200,
+          "type": "deplacement",
+          "subtype": "go",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        }
+      ]
+    },
+    {
+      "desc": "Eau propre",
+      "id": 6,
+      "points": 50,
+      "priorite": 1,
+      "taches": [
+        {
+          "desc": "Go position Eau propre",
+          "id": 1,
+          "positionX": 890,
+          "positionY": 400,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Alignement Eau propre",
+          "id": 2,
+          "positionX": 890,
+          "positionY": 0,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "face",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Mise en position pour récupération Eau propre",
+          "id": 3,
+          "positionX": 890,
+          "positionY": 240,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "On se dégage",
+          "id": 4,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": -200,
+          "type": "deplacement",
+          "subtype": "go",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go position lancement Eau propre",
+          "id": 5,
+          "positionX": 220,
+          "positionY": 930,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "SPECIFIC"
+        },
+        {
+          "desc": "Alignement lancement Eau propre",
+          "id": 6,
+          "positionX": 2000,
+          "positionY": 2773,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "face",
+          "actionId": -1,
+          "mirror": "SPECIFIC"
         }
       ]
     }
@@ -176,7 +353,7 @@
           "desc": "sortie de la zone de départ vers objetif 1",
           "id": 1,
           "positionX": 1000,
-          "positionY": 2150,
+          "positionY": 2130,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto",
@@ -266,8 +443,28 @@
           "mirror": "MIRRORY"
         },
         {
-          "desc": "On recule pour se dégager",
+          "desc": "Préparation allumage interrupteur",
           "id": 4,
+          "positionX": 0,
+          "positionY": 3000,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 12,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Allumage interrupteur",
+          "id": 5,
+          "positionX": 0,
+          "positionY": 3000,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 13,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "On recule pour se dégager",
+          "id": 6,
           "positionX": 0,
           "positionY": 3000,
           "dist": -200,
@@ -287,7 +484,7 @@
         {
           "desc": "Go position séquence abeille",
           "id": 1,
-          "positionX": 1788,
+          "positionX": 1800,
           "positionY": 2781,
           "dist": 0,
           "type": "deplacement",
@@ -298,7 +495,7 @@
         {
           "desc": "Alignement pour lancement abeille",
           "id": 2,
-          "positionX": 1788,
+          "positionX": 1800,
           "positionY": 0,
           "dist": 0,
           "type": "deplacement",
@@ -309,7 +506,7 @@
         {
           "desc": "Mise en position lancement abeille",
           "id": 3,
-          "positionX": 1788,
+          "positionX": 1800,
           "positionY": 2866,
           "dist": 0,
           "type": "deplacement",
@@ -318,13 +515,148 @@
           "mirror": "MIRRORY"
         },
         {
-          "desc": "Lancement abeille",
+          "desc": "Abaissement bras",
           "id": 4,
-          "positionX": 1788,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 3,
+          "mirror": "SPECIFIC"
+        },
+        {
+          "desc": "Lancement abeille",
+          "id": 5,
+          "positionX": 1800,
           "positionY": 2666,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Rentrer bras",
+          "id": 6,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 2,
+          "mirror": "SPECIFIC"
+        }
+      ]
+    },
+    {
+      "desc": "Cubes réservoir",
+      "id": 5,
+      "points": 5,
+      "priorite": 1,
+      "taches": [
+        {
+          "desc": "Go position cubes réservoir",
+          "id": 1,
+          "positionX": 1400,
+          "positionY": 2800,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go sur les cubes réservoir",
+          "id": 2,
+          "positionX": 600,
+          "positionY": 2400,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Alignement pour déposer les cubes réservoir",
+          "id": 3,
+          "positionX": 0,
+          "positionY": 2400,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "face",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Déposer des cubes réservoir",
+          "id": 4,
+          "positionX": 270,
+          "positionY": 2400,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "On se dégage",
+          "id": 5,
+          "positionX": 0,
+          "positionY": 3000,
+          "dist": -200,
+          "type": "deplacement",
+          "subtype": "go",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        }
+      ]
+    },
+    {
+      "desc": "Eau propre",
+      "id": 6,
+      "points": 50,
+      "priorite": 1,
+      "taches": [
+        {
+          "desc": "Go position Eau propre",
+          "id": 1,
+          "positionX": 890,
+          "positionY": 2600,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Alignement Eau propre",
+          "id": 2,
+          "positionX": 890,
+          "positionY": 3000,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "face",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Mise en position pour récupération Eau propre",
+          "id": 3,
+          "positionX": 890,
+          "positionY": 2760,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "On se dégage",
+          "id": 4,
+          "positionX": 0,
+          "positionY": 3000,
+          "dist": -200,
+          "type": "deplacement",
+          "subtype": "go",
           "actionId": -1,
           "mirror": "MIRRORY"
         }

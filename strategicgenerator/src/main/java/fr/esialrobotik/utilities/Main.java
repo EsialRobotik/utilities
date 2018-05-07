@@ -29,7 +29,7 @@ public class Main {
          * Score = pose de l'abeille (5) + pose du panneau (5) = 10
          */
         List<Tache> tachesSortieZoneDepart =  new ArrayList<>();
-        tachesSortieZoneDepart.add(new Tache("sortie de la zone de départ vers objetif 1", tachesSortieZoneDepart.size()+1, 1000, 850, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesSortieZoneDepart.add(new Tache("sortie de la zone de départ vers objetif 1", tachesSortieZoneDepart.size()+1, 1000, 870, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         Objectif objectifSortieZoneDepart0 = new Objectif("Sortie de la zone de départ", objectifsCouleur0.size()+1, 10, 1, tachesSortieZoneDepart);
         Objectif objectifSortieZoneDepart3000 = new Objectif("Sortie de la zone de départ", objectifsCouleur3000.size()+1, 10, 1, null);
         try {
@@ -66,6 +66,8 @@ public class Main {
         tachesPanneauDomotik0.add(new Tache("Go position panneau domotique", tachesPanneauDomotik0.size()+1, 500, 1130, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesPanneauDomotik0.add(new Tache("Alignement panneau domotique", tachesPanneauDomotik0.size()+1, 0, 1130, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
         tachesPanneauDomotik0.add(new Tache("go position panneau domotique pour action", tachesPanneauDomotik0.size()+1, 200, 1130, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesPanneauDomotik0.add(new Tache("Préparation allumage interrupteur", tachesPanneauDomotik0.size()+1, 0, Tache.Type.MANIPULATION, null, 12, Tache.Mirror.MIRRORY));
+        tachesPanneauDomotik0.add(new Tache("Allumage interrupteur", tachesPanneauDomotik0.size()+1, 0, Tache.Type.MANIPULATION, null, 13, Tache.Mirror.MIRRORY));
         tachesPanneauDomotik0.add(new Tache("On recule pour se dégager", tachesPanneauDomotik0.size()+1, -200, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
         Objectif objectifPanneauDomotik0 = new Objectif("Panneau domotik", objectifsCouleur0.size()+1, 25, 1, tachesPanneauDomotik0);
         Objectif objectifPanneauDomotik3000 = new Objectif("Panneau domotik", objectifsCouleur3000.size()+1, 25, 1, null);
@@ -81,17 +83,22 @@ public class Main {
          * On va pousser l'abeille
          * Score = 50
          */
-        List<Tache> tacheAbeille0 = new ArrayList<>();
-        tacheAbeille0.add(new Tache("Go position séquence abeille", tacheAbeille0.size()+1, 1788, 219, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
-        tacheAbeille0.add(new Tache("Alignement pour lancement abeille", tacheAbeille0.size()+1, 1788, 3000, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
-        tacheAbeille0.add(new Tache("Mise en position lancement abeille", tacheAbeille0.size()+1, 1788, 134, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO_BACK, -1, Tache.Mirror.MIRRORY));
-        // todo sortir le bras
-        tacheAbeille0.add(new Tache("Lancement abeille", tacheAbeille0.size()+1, 1788, 334, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
-        // todo rentrer le bras
-        Objectif objectifAbeille0 = new Objectif("Abeille", objectifsCouleur0.size()+1, 50, 1, tacheAbeille0);
+        List<Tache> tachesAbeille0 = new ArrayList<>();
+        List<Tache> tachesAbeille3000 = new ArrayList<>();
+        tachesAbeille0.add(new Tache("Go position séquence abeille", tachesAbeille0.size()+1, 1800, 219, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesAbeille0.add(new Tache("Alignement pour lancement abeille", tachesAbeille0.size()+1, 1800, 3000, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+        tachesAbeille0.add(new Tache("Mise en position lancement abeille", tachesAbeille0.size()+1, 1800, 134, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO_BACK, -1, Tache.Mirror.MIRRORY));
+        int idAbaisseBras = tachesAbeille0.size()+1;
+        tachesAbeille0.add(new Tache("Abaissement bras", idAbaisseBras, 0, Tache.Type.MANIPULATION, null, 1, Tache.Mirror.SPECIFIC));
+        tachesAbeille3000.add(new Tache("Abaissement bras", idAbaisseBras, 0, Tache.Type.MANIPULATION, null, 3, Tache.Mirror.SPECIFIC));
+        tachesAbeille0.add(new Tache("Lancement abeille", tachesAbeille0.size()+1, 1800, 334, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        int idRentrerBras = tachesAbeille0.size()+1;
+        tachesAbeille0.add(new Tache("Rentrer bras", idRentrerBras, 0, Tache.Type.MANIPULATION, null, 0, Tache.Mirror.SPECIFIC));
+        tachesAbeille3000.add(new Tache("Rentrer bras", idRentrerBras, 0, Tache.Type.MANIPULATION, null, 2, Tache.Mirror.SPECIFIC));
+        Objectif objectifAbeille0 = new Objectif("Abeille", objectifsCouleur0.size()+1, 50, 1, tachesAbeille0);
         Objectif objectifAbeille3000 = new Objectif("Abeille", objectifsCouleur3000.size()+1, 50, 1, null);
         try {
-            objectifAbeille3000.generateMirror(objectifAbeille0.taches);
+            objectifAbeille3000.generateMirror(objectifAbeille0.taches, tachesAbeille3000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,16 +109,67 @@ public class Main {
          * On ramène les cubes proches du réservoir d'eau dans la zone de construction
          * Score = 5
          */
+        List<Tache> tachesCubesReservoir0 = new ArrayList<>();
+        tachesCubesReservoir0.add(new Tache("Go position cubes réservoir", tachesCubesReservoir0.size()+1, 1400, 200, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesCubesReservoir0.add(new Tache("Go sur les cubes réservoir", tachesCubesReservoir0.size()+1, 600, 600, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesCubesReservoir0.add(new Tache("Alignement pour déposer les cubes réservoir", tachesCubesReservoir0.size()+1, 0, 600, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+        tachesCubesReservoir0.add(new Tache("Déposer des cubes réservoir", tachesCubesReservoir0.size()+1, 270, 600, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesCubesReservoir0.add(new Tache("On se dégage", tachesCubesReservoir0.size()+1, -200, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
+        Objectif objectifCubesReservoir0 = new Objectif("Cubes réservoir", objectifsCouleur0.size()+1, 5, 1, tachesCubesReservoir0);
+        Objectif objectifCubesReservoir3000 = new Objectif("Cubes réservoir", objectifsCouleur0.size()+1, 5, 1, null);
+        try {
+            objectifCubesReservoir3000.generateMirror(objectifCubesReservoir0.taches);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        objectifsCouleur0.add(objectifCubesReservoir0);
+        objectifsCouleur3000.add(objectifCubesReservoir3000);
 
         /**
          * On va récupérer l'eau propre et l'éjecter
          * Score = récupérer une balle (10) + 8 * une balle dans le chateau d'eau (8*5) = 50
          */
+        List<Tache> tachesEauPropre0 = new ArrayList<>();
+        List<Tache> tachesEauPropre3000 = new ArrayList<>();
+        tachesEauPropre0.add(new Tache("Go position Eau propre", tachesEauPropre0.size()+1, 890, 400, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesEauPropre0.add(new Tache("Alignement Eau propre", tachesEauPropre0.size()+1, 890, 0, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+        tachesEauPropre0.add(new Tache("Préparation remplissage", tachesEauPropre0.size()+1, 0, Tache.Type.MANIPULATION, null, 10, Tache.Mirror.MIRRORY));
+        tachesEauPropre0.add(new Tache("Mise en position pour récupération Eau propre", tachesEauPropre0.size()+1, 890, 240, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesEauPropre0.add(new Tache("Remplissage", tachesEauPropre0.size()+1, 0, Tache.Type.MANIPULATION, null, 9, Tache.Mirror.MIRRORY));
+        tachesEauPropre0.add(new Tache("On se dégage", tachesEauPropre0.size()+1, -200, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
+        tachesEauPropre0.add(new Tache("Remplissage rangement", tachesEauPropre0.size()+1, 0, Tache.Type.MANIPULATION, null, 11, Tache.Mirror.MIRRORY));
+
+        int id = tachesEauPropre0.size()+1;
+        tachesEauPropre0.add(new Tache("Go position lancement Eau propre", id, 220, 930, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.SPECIFIC));
+        tachesEauPropre3000.add(new Tache("Go position lancement Eau propre", id, 220, 930, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.SPECIFIC)); // TODO A FAIRE
+        id = tachesEauPropre0.size()+1;
+        tachesEauPropre0.add(new Tache("Alignement lancement Eau propre", id, 2000, 2773, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.SPECIFIC));
+        tachesEauPropre3000.add(new Tache("Alignement lancement Eau propre", id, 2000, 2773, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.SPECIFIC)); // TODO A FAIRE
+
+        tachesEauPropre0.add(new Tache("Lancement de l'eau propre", tachesEauPropre0.size()+1, 0, Tache.Type.MANIPULATION, null, 4, Tache.Mirror.MIRRORY));
+
+        Objectif objectifEauPropre0 = new Objectif("Eau propre", objectifsCouleur0.size()+1, 50, 1, tachesEauPropre0);
+        Objectif objectifEauPropre3000 = new Objectif("Eau propre", objectifsCouleur0.size()+1, 50, 1, null);
+        try {
+            objectifEauPropre3000.generateMirror(objectifEauPropre0.taches);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        objectifsCouleur0.add(objectifEauPropre0);
+        objectifsCouleur3000.add(objectifEauPropre3000);
 
         /**
          * On va récupérer et larguer l'eau random
          * Score = récupérer une balle (10) + 4 * une balle adverse dans la station d'épuration (4*10) = 50
          */
+//        List<Tache> tachesEauRandom0 = new ArrayList<>();
+//        tachesEauRandom0.add(new Tache("Go position Eau random", tachesEauRandom0.size()+1, 1700, 610, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+//        tachesEauRandom0.add(new Tache("Alignement Eau random", tachesEauRandom0.size()+1, 2000, 610, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+//        tachesEauRandom0.add(new Tache("Mise en position pour récupération Eau random", tachesEauRandom0.size()+1, 1760, 610, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+//        // todo action de récupération
+//        tachesEauRandom0.add(new Tache("Go position station d'épuration", tachesEauRandom0.size()+1, 1550, 900, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+//        tachesEauRandom0.add(new Tache("Alignement station d'épuration", tachesEauRandom0.size()+1, 1550, 3000, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+//        // todo largage station d'épuration
 
 
 //        Tache tache1 = new Tache("go position cube départ", 1, 1000, 850, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY);
