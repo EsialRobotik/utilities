@@ -164,7 +164,7 @@
           "desc": "Mise en position lancement abeille",
           "id": 3,
           "positionX": 1800,
-          "positionY": 134,
+          "positionY": 124,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto_back",
@@ -205,78 +205,26 @@
       ]
     },
     {
-      "desc": "Cubes réservoir",
-      "id": 5,
-      "points": 5,
-      "priorite": 1,
-      "taches": [
-        {
-          "desc": "Go position cubes réservoir",
-          "id": 1,
-          "positionX": 1400,
-          "positionY": 200,
-          "dist": 0,
-          "type": "deplacement",
-          "subtype": "goto",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        },
-        {
-          "desc": "Go sur les cubes réservoir",
-          "id": 2,
-          "positionX": 600,
-          "positionY": 600,
-          "dist": 0,
-          "type": "deplacement",
-          "subtype": "goto",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        },
-        {
-          "desc": "Alignement pour déposer les cubes réservoir",
-          "id": 3,
-          "positionX": 0,
-          "positionY": 600,
-          "dist": 0,
-          "type": "deplacement",
-          "subtype": "face",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        },
-        {
-          "desc": "Déposer des cubes réservoir",
-          "id": 4,
-          "positionX": 270,
-          "positionY": 600,
-          "dist": 0,
-          "type": "deplacement",
-          "subtype": "goto",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        },
-        {
-          "desc": "On se dégage",
-          "id": 5,
-          "positionX": 0,
-          "positionY": 0,
-          "dist": -200,
-          "type": "deplacement",
-          "subtype": "go",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        }
-      ]
-    },
-    {
       "desc": "Eau propre",
-      "id": 6,
+      "id": 5,
       "points": 50,
       "priorite": 1,
       "taches": [
         {
-          "desc": "Go position Eau propre",
+          "desc": "Esquive cube de merde",
           "id": 1,
-          "positionX": 890,
+          "positionX": 1100,
+          "positionY": 630,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go position Eau propre",
+          "id": 2,
+          "positionX": 850,
           "positionY": 400,
           "dist": 0,
           "type": "deplacement",
@@ -286,8 +234,8 @@
         },
         {
           "desc": "Alignement Eau propre",
-          "id": 2,
-          "positionX": 890,
+          "id": 3,
+          "positionX": 850,
           "positionY": 0,
           "dist": 0,
           "type": "deplacement",
@@ -296,10 +244,20 @@
           "mirror": "MIRRORY"
         },
         {
+          "desc": "Préparation remplissage",
+          "id": 4,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 10,
+          "mirror": "MIRRORY"
+        },
+        {
           "desc": "Mise en position pour récupération Eau propre",
-          "id": 3,
-          "positionX": 890,
-          "positionY": 240,
+          "id": 5,
+          "positionX": 850,
+          "positionY": 215,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto",
@@ -307,8 +265,18 @@
           "mirror": "MIRRORY"
         },
         {
+          "desc": "Remplissage",
+          "id": 6,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 9,
+          "mirror": "MIRRORY"
+        },
+        {
           "desc": "On se dégage",
-          "id": 4,
+          "id": 7,
           "positionX": 0,
           "positionY": 0,
           "dist": -200,
@@ -318,26 +286,68 @@
           "mirror": "MIRRORY"
         },
         {
-          "desc": "Go position lancement Eau propre",
-          "id": 5,
+          "desc": "Remplissage rangement",
+          "id": 8,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 11,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go pré-position lancement Eau propre",
+          "id": 9,
           "positionX": 220,
-          "positionY": 930,
+          "positionY": 1130,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto",
           "actionId": -1,
-          "mirror": "SPECIFIC"
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go pré-position lancement Eau propre",
+          "id": 10,
+          "positionX": 220,
+          "positionY": 800,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go position lancement Eau propre",
+          "id": 11,
+          "positionX": 220,
+          "positionY": 930,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto_back",
+          "actionId": -1,
+          "mirror": "MIRRORY"
         },
         {
           "desc": "Alignement lancement Eau propre",
-          "id": 6,
+          "id": 12,
           "positionX": 2000,
-          "positionY": 2773,
+          "positionY": 2870,
           "dist": 0,
           "type": "deplacement",
           "subtype": "face",
           "actionId": -1,
           "mirror": "SPECIFIC"
+        },
+        {
+          "desc": "Lancement de l\u0027eau propre",
+          "id": 13,
+          "positionX": 0,
+          "positionY": 0,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 4,
+          "mirror": "MIRRORY"
         }
       ]
     }
@@ -507,7 +517,7 @@
           "desc": "Mise en position lancement abeille",
           "id": 3,
           "positionX": 1800,
-          "positionY": 2866,
+          "positionY": 2876,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto_back",
@@ -548,78 +558,26 @@
       ]
     },
     {
-      "desc": "Cubes réservoir",
-      "id": 5,
-      "points": 5,
-      "priorite": 1,
-      "taches": [
-        {
-          "desc": "Go position cubes réservoir",
-          "id": 1,
-          "positionX": 1400,
-          "positionY": 2800,
-          "dist": 0,
-          "type": "deplacement",
-          "subtype": "goto",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        },
-        {
-          "desc": "Go sur les cubes réservoir",
-          "id": 2,
-          "positionX": 600,
-          "positionY": 2400,
-          "dist": 0,
-          "type": "deplacement",
-          "subtype": "goto",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        },
-        {
-          "desc": "Alignement pour déposer les cubes réservoir",
-          "id": 3,
-          "positionX": 0,
-          "positionY": 2400,
-          "dist": 0,
-          "type": "deplacement",
-          "subtype": "face",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        },
-        {
-          "desc": "Déposer des cubes réservoir",
-          "id": 4,
-          "positionX": 270,
-          "positionY": 2400,
-          "dist": 0,
-          "type": "deplacement",
-          "subtype": "goto",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        },
-        {
-          "desc": "On se dégage",
-          "id": 5,
-          "positionX": 0,
-          "positionY": 3000,
-          "dist": -200,
-          "type": "deplacement",
-          "subtype": "go",
-          "actionId": -1,
-          "mirror": "MIRRORY"
-        }
-      ]
-    },
-    {
       "desc": "Eau propre",
-      "id": 6,
+      "id": 5,
       "points": 50,
       "priorite": 1,
       "taches": [
         {
-          "desc": "Go position Eau propre",
+          "desc": "Esquive cube de merde",
           "id": 1,
-          "positionX": 890,
+          "positionX": 1100,
+          "positionY": 2370,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go position Eau propre",
+          "id": 2,
+          "positionX": 850,
           "positionY": 2600,
           "dist": 0,
           "type": "deplacement",
@@ -629,8 +587,8 @@
         },
         {
           "desc": "Alignement Eau propre",
-          "id": 2,
-          "positionX": 890,
+          "id": 3,
+          "positionX": 850,
           "positionY": 3000,
           "dist": 0,
           "type": "deplacement",
@@ -639,10 +597,20 @@
           "mirror": "MIRRORY"
         },
         {
+          "desc": "Préparation remplissage",
+          "id": 4,
+          "positionX": 0,
+          "positionY": 3000,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 10,
+          "mirror": "MIRRORY"
+        },
+        {
           "desc": "Mise en position pour récupération Eau propre",
-          "id": 3,
-          "positionX": 890,
-          "positionY": 2760,
+          "id": 5,
+          "positionX": 850,
+          "positionY": 2785,
           "dist": 0,
           "type": "deplacement",
           "subtype": "goto",
@@ -650,14 +618,88 @@
           "mirror": "MIRRORY"
         },
         {
+          "desc": "Remplissage",
+          "id": 6,
+          "positionX": 0,
+          "positionY": 3000,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 9,
+          "mirror": "MIRRORY"
+        },
+        {
           "desc": "On se dégage",
-          "id": 4,
+          "id": 7,
           "positionX": 0,
           "positionY": 3000,
           "dist": -200,
           "type": "deplacement",
           "subtype": "go",
           "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Remplissage rangement",
+          "id": 8,
+          "positionX": 0,
+          "positionY": 3000,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 11,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go pré-position lancement Eau propre",
+          "id": 9,
+          "positionX": 220,
+          "positionY": 1870,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go pré-position lancement Eau propre",
+          "id": 10,
+          "positionX": 220,
+          "positionY": 2200,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Go position lancement Eau propre",
+          "id": 11,
+          "positionX": 220,
+          "positionY": 2070,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "goto_back",
+          "actionId": -1,
+          "mirror": "MIRRORY"
+        },
+        {
+          "desc": "Alignement lancement Eau propre",
+          "id": 12,
+          "positionX": 2000,
+          "positionY": 130,
+          "dist": 0,
+          "type": "deplacement",
+          "subtype": "face",
+          "actionId": -1,
+          "mirror": "SPECIFIC"
+        },
+        {
+          "desc": "Lancement de l\u0027eau propre",
+          "id": 13,
+          "positionX": 0,
+          "positionY": 3000,
+          "dist": 0,
+          "type": "manipulation",
+          "actionId": 4,
           "mirror": "MIRRORY"
         }
       ]
