@@ -127,7 +127,7 @@ public class Main {
 
         /**
          * On va récupérer l'eau propre et l'éjecter
-         * Score = récupérer une balle (10) + 8 * une balle dans le chateau d'eau (8*5) = 50
+         * Score = récupérer une balle (10) + 8 * une balle dans le chateau d'eau (8*5) = 50 - On paris 7
          */
         List<Tache> tachesEauPropre0 = new ArrayList<>();
         List<Tache> tachesEauPropre3000 = new ArrayList<>();
@@ -136,23 +136,27 @@ public class Main {
         tachesEauPropre0.add(new Tache("Go position Eau propre", tachesEauPropre0.size()+1, eauX, 400, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesEauPropre0.add(new Tache("Alignement Eau propre", tachesEauPropre0.size()+1, eauX, 0, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
         tachesEauPropre0.add(new Tache("Préparation remplissage", tachesEauPropre0.size()+1, 0, Tache.Type.MANIPULATION, null, 10, Tache.Mirror.MIRRORY));
-        tachesEauPropre0.add(new Tache("Mise en position pour récupération Eau propre", tachesEauPropre0.size()+1, eauX, 215, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+
+        int id = tachesEauPropre0.size()+1;
+        tachesEauPropre0.add(new Tache("Mise en position pour récupération Eau propre", id, eauX, 225, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.SPECIFIC));
+        tachesEauPropre3000.add(new Tache("Mise en position pour récupération Eau propre", id, eauX, 3000 - 215, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.SPECIFIC));
+
         tachesEauPropre0.add(new Tache("Remplissage", tachesEauPropre0.size()+1, 0, Tache.Type.MANIPULATION, null, 9, Tache.Mirror.MIRRORY));
         tachesEauPropre0.add(new Tache("On se dégage", tachesEauPropre0.size()+1, -200, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
         tachesEauPropre0.add(new Tache("Remplissage rangement", tachesEauPropre0.size()+1, 0, Tache.Type.MANIPULATION, null, 11, Tache.Mirror.MIRRORY));
-        tachesEauPropre0.add(new Tache("Go pré-position lancement Eau propre", tachesEauPropre0.size()+1, 220, 1130, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
-        tachesEauPropre0.add(new Tache("Go pré-position lancement Eau propre", tachesEauPropre0.size()+1, 220, 800, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesEauPropre0.add(new Tache("Go pré-position lancement Eau propre", tachesEauPropre0.size()+1, 200, 1130, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesEauPropre0.add(new Tache("Go pré-position lancement Eau propre", tachesEauPropre0.size()+1, 200, 750, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
 
-        int id = tachesEauPropre0.size()+1;
+        id = tachesEauPropre0.size()+1;
         tachesEauPropre0.add(new Tache("Go position lancement Eau propre", id, 220, 930, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO_BACK, -1, Tache.Mirror.MIRRORY));
         id = tachesEauPropre0.size()+1;
-        tachesEauPropre0.add(new Tache("Alignement lancement Eau propre", id, 2000, 2870, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.SPECIFIC));
-        tachesEauPropre3000.add(new Tache("Alignement lancement Eau propre", id, 2000, 3000-2870, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.SPECIFIC));
+        tachesEauPropre0.add(new Tache("Alignement lancement Eau propre", id, 720, 1793, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.SPECIFIC));
+        tachesEauPropre3000.add(new Tache("Alignement lancement Eau propre", id, 2000, 130, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.SPECIFIC));
 
         tachesEauPropre0.add(new Tache("Lancement de l'eau propre", tachesEauPropre0.size()+1, 0, Tache.Type.MANIPULATION, null, 4, Tache.Mirror.MIRRORY));
 
-        Objectif objectifEauPropre0 = new Objectif("Eau propre", objectifsCouleur0.size()+1, 50, 1, tachesEauPropre0);
-        Objectif objectifEauPropre3000 = new Objectif("Eau propre", objectifsCouleur0.size()+1, 50, 1, null);
+        Objectif objectifEauPropre0 = new Objectif("Eau propre", objectifsCouleur0.size()+1, 45, 1, tachesEauPropre0);
+        Objectif objectifEauPropre3000 = new Objectif("Eau propre", objectifsCouleur0.size()+1, 45, 1, null);
         try {
             objectifEauPropre3000.generateMirror(objectifEauPropre0.taches, tachesEauPropre3000);
         } catch (Exception e) {
