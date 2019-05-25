@@ -1,0 +1,698 @@
+{
+  "actionPools": [
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 509,
+          "readOnlyAngleDegrees": 149.266862170088
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 887,
+          "readOnlyAngleDegrees": 260.11730205278593
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 511,
+          "readOnlyAngleDegrees": 149.8533724340176
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 803,
+          "readOnlyAngleDegrees": 235.48387096774192
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 443,
+          "readOnlyAngleDegrees": 129.91202346041055
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 764,
+          "readOnlyAngleDegrees": 224.04692082111438
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 512,
+          "readOnlyAngleDegrees": 150.1466275659824
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 799,
+          "readOnlyAngleDegrees": 234.3108504398827
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 613,
+          "readOnlyAngleDegrees": 179.76539589442817
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 658,
+          "readOnlyAngleDegrees": 192.96187683284458
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 649,
+          "readOnlyAngleDegrees": 190.32258064516128
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 840,
+          "readOnlyAngleDegrees": 246.3343108504399
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPump",
+          "pumpId": 0,
+          "switchState": true
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 650,
+          "readOnlyAngleDegrees": 190.6158357771261
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 664,
+          "readOnlyAngleDegrees": 194.72140762463343
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 649,
+          "readOnlyAngleDegrees": 190.32258064516128
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 834,
+          "readOnlyAngleDegrees": 244.57478005865104
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 536,
+          "readOnlyAngleDegrees": 157.18475073313783
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 726,
+          "readOnlyAngleDegrees": 212.90322580645162
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 630,
+          "readOnlyAngleDegrees": 184.7507331378299
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 834,
+          "readOnlyAngleDegrees": 244.57478005865104
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 538,
+          "readOnlyAngleDegrees": 157.77126099706743
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 730,
+          "readOnlyAngleDegrees": 214.07624633431087
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 373,
+          "readOnlyAngleDegrees": 109.3841642228739
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 841,
+          "readOnlyAngleDegrees": 246.62756598240472
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 633,
+          "readOnlyAngleDegrees": 185.63049853372434
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 810,
+          "readOnlyAngleDegrees": 237.5366568914956
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 367,
+          "readOnlyAngleDegrees": 107.62463343108504
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 680,
+          "readOnlyAngleDegrees": 199.41348973607037
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPump",
+          "pumpId": 0,
+          "switchState": false
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionWaiting",
+          "waitingTimeMs": 400
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 565,
+          "readOnlyAngleDegrees": 165.6891495601173
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 754,
+          "readOnlyAngleDegrees": 221.11436950146629
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 369,
+          "readOnlyAngleDegrees": 108.21114369501467
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 676,
+          "readOnlyAngleDegrees": 198.24046920821112
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 576,
+          "readOnlyAngleDegrees": 168.91495601173023
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 755,
+          "readOnlyAngleDegrees": 221.40762463343108
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 650,
+          "readOnlyAngleDegrees": 190.6158357771261
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 789,
+          "readOnlyAngleDegrees": 231.3782991202346
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPump",
+          "pumpId": 0,
+          "switchState": true
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 646,
+          "readOnlyAngleDegrees": 189.44281524926686
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 726,
+          "readOnlyAngleDegrees": 212.90322580645162
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 649,
+          "readOnlyAngleDegrees": 190.32258064516128
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 761,
+          "readOnlyAngleDegrees": 223.16715542521993
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 583,
+          "readOnlyAngleDegrees": 170.96774193548387
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 703,
+          "readOnlyAngleDegrees": 206.15835777126097
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 648,
+          "readOnlyAngleDegrees": 190.02932551319648
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 840,
+          "readOnlyAngleDegrees": 246.3343108504399
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 599,
+          "readOnlyAngleDegrees": 175.65982404692082
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 703,
+          "readOnlyAngleDegrees": 206.15835777126097
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 379,
+          "readOnlyAngleDegrees": 111.14369501466275
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 841,
+          "readOnlyAngleDegrees": 246.62756598240472
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 632,
+          "readOnlyAngleDegrees": 185.33724340175954
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 738,
+          "readOnlyAngleDegrees": 216.42228739002934
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 371,
+          "readOnlyAngleDegrees": 108.79765395894428
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 761,
+          "readOnlyAngleDegrees": 223.16715542521993
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPump",
+          "pumpId": 0,
+          "switchState": false
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionWaiting",
+          "waitingTimeMs": 400
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 581,
+          "readOnlyAngleDegrees": 170.38123167155427
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 719,
+          "readOnlyAngleDegrees": 210.85043988269797
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 371,
+          "readOnlyAngleDegrees": 108.79765395894428
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 763,
+          "readOnlyAngleDegrees": 223.75366568914956
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 612,
+          "readOnlyAngleDegrees": 179.47214076246334
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 720,
+          "readOnlyAngleDegrees": 211.14369501466277
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 641,
+          "readOnlyAngleDegrees": 187.9765395894428
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 763,
+          "readOnlyAngleDegrees": 223.75366568914956
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPump",
+          "pumpId": 0,
+          "switchState": true
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 685,
+          "readOnlyAngleDegrees": 200.87976539589442
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 750,
+          "readOnlyAngleDegrees": 219.94134897360703
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 644,
+          "readOnlyAngleDegrees": 188.85630498533723
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 706,
+          "readOnlyAngleDegrees": 207.03812316715545
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 621,
+          "readOnlyAngleDegrees": 182.11143695014664
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 681,
+          "readOnlyAngleDegrees": 199.70674486803517
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 639,
+          "readOnlyAngleDegrees": 187.39002932551318
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 804,
+          "readOnlyAngleDegrees": 235.77712609970675
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 441,
+          "readOnlyAngleDegrees": 129.32551319648093
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 687,
+          "readOnlyAngleDegrees": 201.46627565982402
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 525,
+          "readOnlyAngleDegrees": 153.95894428152494
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 839,
+          "readOnlyAngleDegrees": 246.0410557184751
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 476,
+          "readOnlyAngleDegrees": 139.58944281524927
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 663,
+          "readOnlyAngleDegrees": 194.4281524926686
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 392,
+          "readOnlyAngleDegrees": 114.95601173020528
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 838,
+          "readOnlyAngleDegrees": 245.74780058651027
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 610,
+          "readOnlyAngleDegrees": 178.88563049853374
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 683,
+          "readOnlyAngleDegrees": 200.2932551319648
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 379,
+          "readOnlyAngleDegrees": 111.14369501466275
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 839,
+          "readOnlyAngleDegrees": 246.0410557184751
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPump",
+          "pumpId": 0,
+          "switchState": false
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionWaiting",
+          "waitingTimeMs": 400
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 556,
+          "readOnlyAngleDegrees": 163.049853372434
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 660,
+          "readOnlyAngleDegrees": 193.54838709677418
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 379,
+          "readOnlyAngleDegrees": 111.14369501466275
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 836,
+          "readOnlyAngleDegrees": 245.16129032258067
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 2,
+          "rawAngle": 554,
+          "readOnlyAngleDegrees": 162.46334310850438
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 3,
+          "rawAngle": 661,
+          "readOnlyAngleDegrees": 193.841642228739
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 1,
+          "rawAngle": 540,
+          "readOnlyAngleDegrees": 158.35777126099705
+        },
+        {
+          "actionId": "actionPosition",
+          "ax12Id": 4,
+          "rawAngle": 836,
+          "readOnlyAngleDegrees": 245.16129032258067
+        }
+      ]
+    }
+  ]
+}

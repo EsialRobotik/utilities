@@ -13,15 +13,37 @@ import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
 import main.AX12Main;
 
-public class AX12LinkSerial implements AX12Link{
+public class AX12LinkSerial implements AX12Link {
 	
 	private SerialPort sp;
 	private OutputStream os;
 	private InputStream is;
+	private boolean combinedRxTx;
 	
+	protected ArrayList<Byte> lecture;
 	
 	public AX12LinkSerial(SerialPort sp, int baudRate) throws AX12LinkException {
+		this(sp, baudRate, null);
+	}
+	
+	
+	public AX12LinkSerial(SerialPort sp, int baudRate, Boolean combinedRxTx) throws AX12LinkException {
 		this.sp = sp;
+		this.lecture = new ArrayList<Byte>();
+		this.combinedRxTx = combinedRxTx == null ? false : combinedRxTx;
+		try {
+			this.sp.setDTR(false);
+			this.sp.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+			//this.sp.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_OUT);
+			
+			this.sp.setSerialPortParams(baudRate,
+                    SerialPort.DATABITS_8,
+                    SerialPort.STOPBITS_1,
+                    SerialPort.PARITY_NONE );
+			this.sp.enableReceiveTimeout(50);
+		} catch (UnsupportedCommOperationException e1) {
+			e1.printStackTrace();
+		}
 		this.setBaudRate(baudRate);
 		try {
 			this.is = sp.getInputStream();
@@ -29,6 +51,7 @@ public class AX12LinkSerial implements AX12Link{
 		} catch (IOException e) {
 			throw new AX12LinkException("Erreur de récupération des flux d'entrées/sorties", e);
 		}
+
 	}
 
 	@Override
@@ -39,7 +62,7 @@ public class AX12LinkSerial implements AX12Link{
 	public String getUartName() {
 		return sp.getName();
 	}
-
+	
 	@Override
 	public void setBaudRate(int baudRate) throws AX12LinkException {
 		try {
@@ -50,32 +73,49 @@ public class AX12LinkSerial implements AX12Link{
 		}
 	}
 
-	@Override
-	public void sendCommandWithoutFeedBack(byte[] cmd, int baudRate) throws AX12LinkException {
+	@Override 
+	public byte[] sendCommand(byte[] cmd, int baudRate) throws AX12LinkException {
 		int oldBr = -1;
+		byte[] response = null;
 		if (sp.getBaudRate() != baudRate) {
 			oldBr = sp.getBaudRate();
-			try {
-				sp.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-			} catch (UnsupportedCommOperationException e) {
-				throw new AX12LinkException("Erreur de changement du BaudRate", e);
-			}
+			this.setBaudRate(baudRate);
 		}
 		
 		try {
 			os.write(cmd);
 			os.flush();
+			
+			// On retire du flux d'entrée la commande qu'on vient juste d'envoyer si rx et tx sont combinés
+			if (this.combinedRxTx) {
+				for (int i=0; i<cmd.length; i++) {
+					if (is.read() == -1) {
+						throw new AX12LinkException("Erreur de changement d'échapement de la commande dans le flux d'entrée");
+					}
+				}	
+			}
+			
+			// On lit la réponse de l'AX12
+			this.lecture.clear();
+			int r;
+			while ((r = is.read()) != -1) {
+				lecture.add(AX12.intToUnsignedByte(r));
+			}
+			
+			response = new byte[lecture.size()];
+			for (int i=lecture.size()-1; i>=0; i--) {
+				response[i] = lecture.get(i);
+			}
+			
 		} catch (IOException e1) {
 			throw new AX12LinkException("Erreur de transmition de la commande", e1);
+		} finally {
+			if (oldBr != -1) {
+				this.setBaudRate(oldBr);
+			}
 		}
 		
-		if (oldBr != -1) {
-			try {
-				sp.setSerialPortParams(oldBr, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-			} catch (UnsupportedCommOperationException e) {
-				throw new AX12LinkException("Erreur de restauration du BaudRate", e);
-			}	
-		}
+		return response;
 	}
 	
 	public static String[] getAvailableSerialPorts() {
@@ -116,6 +156,7 @@ public class AX12LinkSerial implements AX12Link{
 		while(p.hasMoreElements()){
 			try {
 				cpi = p.nextElement();
+				System.out.println(cpi.getName());
 				if(cpi != null && !cpi.isCurrentlyOwned() && (name == null || cpi.getName().equals(name))) {
 					cp = cpi.open(AX12Main.class.getName(), 500);
 					if(cp instanceof SerialPort){
@@ -129,4 +170,15 @@ public class AX12LinkSerial implements AX12Link{
 		return null;
 	}
 
+	@Override
+	public void enableDtr(boolean enable) {
+		sp.setDTR(enable);
+	}
+
+
+	@Override
+	public void enableRts(boolean enable) {
+		sp.setRTS(enable);
+	}
+	
 }

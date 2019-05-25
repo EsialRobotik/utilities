@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Pincess'Botik Tests" default="tout" basedir=".">
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		  <classpath>
+		    <pathelement location="${basedir}/libs/ant-contrib-1.0b3.jar" />
+		  </classpath>
+	</taskdef>
+	
+	<loadproperties srcFile="build.properties"/>
+	
+	<property name="project.sources.dir" value="src" />
+	<property name="project.sources.html.dir" value="html" />
+	<property name="project.lib.dir" value="libs"/>
+
+	
+	<property name="project.version" value="2019" />
+	<property name="project.output" value="C:/Users/gryttix/Desktop/configPrincesse${project.version}" />
+	<property name="project.output.html" value="${project.output}/html" />
+	<property name="project.output.temp" value="${project.output}/temp" />
+	<property name="project.output.bin" value="${project.output.temp}/common_bin"/>
+	<property name="project.output.programme.bin" value="${project.output.temp}/programme_bin"/>
+	
+	<property name="project.output.libs.directoryName" value="configPrincesse${project.version}_lib" />
+	<property name="project.output.libs" value="${project.output}/${project.output.libs.directoryName}" />
+	
+	<property name="project.jar.programme" value="${project.output}/configPrincesse${project.version}.jar"/>
+	<property name="project.manifest.programme" value="${project.output.temp}/MANIFEST_PROGRAMME.MF"/>
+	
+	<!-- Definition du classpath du project -->
+	<path id="project.classpath">
+		<fileset dir="${project.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<pathelement location="${project.output.bin}" />
+	</path>
+
+	<!-- Initialisation -->
+	<target name="init"> 
+		<mkdir dir="${project.output}" />
+		<mkdir dir="${project.output.html}" />
+		<mkdir dir="${project.output.temp}" />
+		<mkdir dir="${project.output.bin}" />
+		<mkdir dir="${project.output.programme.bin}" />
+		<mkdir dir="${project.output.libs}" />
+	</target>
+	
+	<!-- Compilation des classes du project -->
+	<target name="compile" description="Compilation des classes" depends="init">
+		<!-- JAVAC --> 
+		<javac srcdir="${project.sources.dir}" 
+			destdir="${project.output.bin}" 
+			debug="on" 
+			optimize="off" 
+			deprecation="on"
+			fork="yes"
+			executable="${project.bin.javac}">
+				<classpath refid="project.classpath"/>
+		</javac>
+		
+		<!-- Copie des ressources éventuelles dans le bin, sauf les sources .java ! -->
+		<copy todir="${project.output.bin}" >  
+			<fileset dir="${project.sources.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		 </copy>
+		
+	</target>
+	
+	<!-- Copie du dossier html -->
+	<target name="html" description="Compilation des classes" depends="init">
+		<copy todir="${project.output.html}" >  
+			<fileset dir="${project.sources.html.dir}" />
+		 </copy>
+		
+	</target>
+	
+	
+	<!-- Construction du Jar principal -->
+	<target name="jarProgramme" description="Création du jar du programme principal" depends="compile">
+		<!-- Construction du class path -->
+		<local name="file"/>
+		<var name="classPath" value="."/>
+		
+		<for param="file">
+			<path>
+				<fileset dir="${project.lib.dir}" includes="*.jar"/>
+			</path>
+			<sequential>
+				<var name="name" unset="true"/>
+				<basename file="@{file}" property="name" />
+				<var name="oldClassPath" unset="true" />
+				<var name="oldClassPath" value="${classPath}" />
+				<var name="classPath" value="${oldClassPath} ${project.output.libs.directoryName}/${name}"/>
+			</sequential>
+		</for>
+		
+		<echo message="Class-Path généré : ${classPath}" />
+		
+		<!-- Construction du manifest -->
+		<manifest file="${project.manifest.programme}">
+			<attribute name="Class-Path" value="${classPath}"/>
+			<attribute name="Main-Class" value="main.AX12Main"/>
+		</manifest>
+		
+		<!-- Copie des fichiers qui constitueront le Jar -->
+		<copy todir="${project.output.programme.bin}" >  
+			<fileset dir="${project.output.bin}" />
+		 </copy>
+		
+		<!-- Construction du Jar -->
+		<jar destfile="${project.jar.programme}"
+			basedir="${project.output.programme.bin}"
+			manifest="${project.manifest.programme}" />
+	</target>
+	
+	<!-- Nettoyage -->
+	<target name="clean" description="Supprime les sources pour que le dossier soit nickel">
+		<delete dir="${project.output.temp}"/>
+		<delete dir="${project.output.savedir}"/>
+	</target>
+    
+    <!-- Deploy -->
+	<target name="deployOnPrincess" description="Déploiement du programme sur la Pincess" depends="clean">
+		<exec executable="${project.bin.scp}">
+			<arg value="-i" />
+		    <arg value="${project.princess.privateKey}" />
+			<arg value="-o" />
+			<arg value="StrictHostKeyChecking=no" />
+			<arg value="-r" />
+			<arg value="${project.output}/*" />
+			<arg value="${project.princess.user}@${project.princess.host}:${project.princess.deployDir}" />
+	    </exec>
+	</target>
+	
+	<!-- Tout -->
+	<target name="tout" description="Build tout !" depends="jarProgramme">
+		<!-- Copie des libs -->
+		<copy todir="${project.output.libs}" overwrite="true">
+		    <fileset file="${project.lib.dir}/*.jar"/>
+		</copy>
+		
+		<!-- Copie des dll -->
+		<copy todir="${project.output}" overwrite="true">
+		    <fileset file="${project.lib.dir}/*.dll"/>
+		</copy>
+		
+		<!-- Copie des jnilib -->
+		<copy todir="${project.output}" overwrite="true">
+		    <fileset file="${project.lib.dir}/*.jnilib"/>
+		</copy>
+		
+        <!-- Suppression des sources -->
+		<antcall target="clean" />
+		
+        <!-- Copie de l'interface HTML -->
+		<antcall target="html" />
+		
+        <!-- Déploiement sur le robot -->
+		<antcall target="deployOnPrincess" />
+	</target>
+
+</project>

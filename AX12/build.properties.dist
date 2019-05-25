@@ -1,0 +1,8 @@
+project.year=Année du projet, exemple : 2019
+project.bin.scp=path/to/scp.exe
+project.bin.javac=path/to/javac.exe
+	
+project.princess.host=192.168.1.x
+project.princess.user=user
+project.princess.deployDir=/path/to/deploy/dist
+project.princess.privateKey=path/to/your/private/key

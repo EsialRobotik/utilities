@@ -20,8 +20,8 @@ public class AX12MainConsole {
 	private boolean continueMainLoop;
 	private AX12LinkSerial sc;
 	
-	public AX12MainConsole() {
-		SerialPort sp = AX12LinkSerial.getSerialPort(null);
+	public AX12MainConsole(String serialPortName) {
+		SerialPort sp = AX12LinkSerial.getSerialPort(serialPortName);
 		sc = null;
 		if (sp != null) {
 			try {
@@ -67,7 +67,7 @@ public class AX12MainConsole {
 	}
 	
 	private String getInfos() {
-		if (sc == null) {
+		if (sc == null || ax12 == null) {
 			return "non-conecté>";
 		} else {
 			return sc.getUartName()+"@"+sc.getBaudRate()+"bps-addr"+ax12.getAddress()+">";
