@@ -83,7 +83,7 @@ srf08_acquire(void)
 static void
 mm_distance_init(void)
 {
-  for (unsigned int i = 0u; i < MM_DISTANCE_BUFSIZE; i++)
+  for (unsigned char i = 0u; i < MM_DISTANCE_BUFSIZE; i++)
   { mm_buffer[i] = srf08_acquire(); }
 }
 
@@ -95,7 +95,7 @@ mm_distance_calculate(void)
    * sum at least 819 measures and still be sure we will not have an overflow.
    * So the sum we perform here is very safe! */
   uint16_t mm_distance = 0u;
-  for (unsigned int i = 0u; i < MM_DISTANCE_BUFSIZE; i++)
+  for (unsigned char i = 0u; i < MM_DISTANCE_BUFSIZE; i++)
   { mm_distance += mm_buffer[i]; }
 
   return mm_distance / MM_DISTANCE_BUFSIZE;
