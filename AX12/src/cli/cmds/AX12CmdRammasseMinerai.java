@@ -1,7 +1,9 @@
 package cli.cmds;
 
 import ax12.AX12;
+import ax12.AX12Exception;
 import ax12.AX12LinkException;
+import ax12.value.AX12Position;
 import cli.AX12MainConsole;
 
 public class AX12CmdRammasseMinerai extends Ax12Cmd {
@@ -43,8 +45,8 @@ public class AX12CmdRammasseMinerai extends Ax12Cmd {
 		int ad = a12.getAddress();
 		a12.setAddress(4);
 		try {
-			a12.setServoPositionInDegrees(angle);
-		} catch (AX12LinkException e) {
+			a12.setServoPosition(AX12Position.buildFromDegrees(angle));
+		} catch (AX12LinkException | AX12Exception e) {
 			throw new Ax12CmdException("Erreur de commande du collecteur de minerai", e);
 		}
 		a12.setAddress(ad);

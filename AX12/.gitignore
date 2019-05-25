@@ -2,3 +2,5 @@ build.properties
 .settings
 .project
 html/data
+/bin/
+.classpath

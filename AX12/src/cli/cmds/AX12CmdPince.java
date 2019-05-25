@@ -1,9 +1,9 @@
 package cli.cmds;
 
-import java.security.cert.CertPathValidatorException.BasicReason;
-
 import ax12.AX12;
+import ax12.AX12Exception;
 import ax12.AX12LinkException;
+import ax12.value.AX12Position;
 import cli.AX12MainConsole;
 
 public class AX12CmdPince extends Ax12Cmd{
@@ -58,8 +58,8 @@ public class AX12CmdPince extends Ax12Cmd{
 		int ad = ax12.getAddress();
 		ax12.setAddress(e.addr);
 		try {
-			ax12.setServoPositionInDegrees(e.angle);
-		} catch (AX12LinkException e2) {
+			ax12.setServoPosition(AX12Position.buildFromDegrees(e.angle));
+		} catch (AX12LinkException | AX12Exception e2) {
 			e2.printStackTrace();
 		}
 		ax12.setAddress(ad);
