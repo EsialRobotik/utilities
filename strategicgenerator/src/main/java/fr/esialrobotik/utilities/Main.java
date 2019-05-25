@@ -20,6 +20,72 @@ public class Main {
         System.out.println("Génération de la stratégie");
 
         // Liste des objectifs de chaque côté
+        // 0 = Jaune, 3000 = Violet
+        List<Objectif> objectifsCouleur0 = new ArrayList<>();
+        List<Objectif> objectifsCouleur3000 = new ArrayList<>();
+
+        /**
+         * Si on sort de la zone de départ, on marque les points de l'expérience complète (démarrage à distance au SRF08)
+         * Score = pose du l'expérience (5) + allumage (15) + électron (20) = 40
+         */
+        List<Tache> tachesSortieZoneDepart =  new ArrayList<>();
+        tachesSortieZoneDepart.add(new Tache("sortie de la zone de départ vers petit distributeur", tachesSortieZoneDepart.size()+1, 1880, 225, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesSortieZoneDepart.add(new Tache("alignement petit distributeur", tachesSortieZoneDepart.size()+1, 2000, 225, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+        // todo action de récupération + manoeuvres
+        Objectif objectifSortieZoneDepart0 = new Objectif("Récupération petit distributeur", objectifsCouleur0.size()+1, 40, 1, tachesSortieZoneDepart);
+        Objectif objectifSortieZoneDepart3000 = new Objectif("Récupération petit distributeur", objectifsCouleur3000.size()+1, 40, 1, null);
+        try {
+            objectifSortieZoneDepart3000.generateMirror(objectifSortieZoneDepart0.taches);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        objectifsCouleur0.add(objectifSortieZoneDepart0);
+        objectifsCouleur3000.add(objectifSortieZoneDepart3000);
+
+        /**
+         * On évacue la zone de chaos
+         * 5 palets dont 1 de la bonne couleur = 1 * 5 + 5 = 10
+         */
+//        List<Tache> tachesChaos0 = new ArrayList<>();
+//        List<Tache> tachesChaos3000 = new ArrayList<>();
+//        tachesChaos0.add(new Tache("Go position séquence chaos", tachesChaos0.size()+1, 300, 1400, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+//        tachesChaos0.add(new Tache("Go position séquence chaos 2", tachesChaos0.size()+1, 1050, 1400, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+//        tachesChaos0.add(new Tache("Alignement avec le chaos", tachesChaos0.size()+1, 1050, 0, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+//        tachesChaos0.add(new Tache("On pousse la chaos", tachesChaos0.size()+1, 1050, 400, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+//        Objectif objectifChaos0 = new Objectif("Zone de chaos", objectifsCouleur0.size()+1, 10, 1, tachesChaos0);
+//        Objectif objectifChaos3000 = new Objectif("Zone de chaos", objectifsCouleur3000.size()+1, 10, 1, null);
+//        try {
+//            objectifChaos3000.generateMirror(objectifChaos0.taches, tachesChaos3000);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        objectifsCouleur0.add(objectifChaos0);
+//        objectifsCouleur3000.add(objectifChaos3000);
+
+        // Création de la stratégie complète
+        Strategie strat = new Strategie();
+        strat.couleur0 = objectifsCouleur0;
+        strat.couleur3000 = objectifsCouleur3000;
+
+        System.out.println(strat.toString());
+
+        final GsonBuilder builder = new GsonBuilder();
+        final Gson gson = builder.create();
+
+        System.out.println("#########################");
+        System.out.println(gson.toJson(strat));
+
+        try (PrintWriter jsonFile = new PrintWriter("configCollection.json")) {
+            jsonFile.println(gson.toJson(strat));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main2018(String... arg) {
+        System.out.println("Génération de la stratégie");
+
+        // Liste des objectifs de chaque côté
         // 0 = Vert, 3000 = Orange
         List<Objectif> objectifsCouleur0 = new ArrayList<>();
         List<Objectif> objectifsCouleur3000 = new ArrayList<>();
