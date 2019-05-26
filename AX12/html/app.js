@@ -466,6 +466,10 @@ $( function() {
         return $(".actions-records").find(".actions-records__arm input[id=princess_arm_left]").prop('checked');
     }
     
+    const middleArmSelected = function() {
+    	return $(".actions-records").find(".actions-records__arm input[id=princess_arm_middle]").prop('checked');
+    }
+    
     const rightArmSelected = function() {
         return $(".actions-records").find(".actions-records__arm input[id=princess_arm_right]").prop('checked');
     }
@@ -473,10 +477,13 @@ $( function() {
     const getAx12IdsToRecord = function() {
         axs = [];
         if (leftArmSelected()) {
-            axs = axs.concat([1, 2, 3, 4]);
+            axs = axs.concat([2, 3, 4]);
+        }
+        if (middleArmSelected()) {
+            axs = axs.concat([1, 5, 9]);
         }
         if (rightArmSelected()) {
-            axs = axs.concat([5, 6, 7, 8]);
+            axs = axs.concat([6, 7, 8]);
         }
         return axs;
     }
