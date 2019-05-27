@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <FastLED.h>
 
 /* Address of the SRF08 on the I2C bus
  *
@@ -26,17 +27,46 @@
  *
  *   SRF_MAX_RANGE_MM = (SRF_RANGE_REG * 43) + 43
  */
-#define SRF_MAX_RANGE_MM 700u /* 70 cm */
+#define SRF_MAX_RANGE_MM 500u /* 50 cm */
 #define SRF_RANGE_REG ((SRF_MAX_RANGE_MM - 43u) / 43u)
-
-#define PIN_LED 13
 
 /* Output digital pin that triggers the electromagnet */
 #define PIN_ELECTROMAGNET 2
 
+/* LEDs wall configuration */
+#define PIN_LED_WALL 5
+#define NUM_LEDS     60
+#define LED_TYPE     WS2812B
+#define COLOR_ORDER  GRB
+#define COLOR_PINK CRGB(252, 90, 220)
+#define COLOR_BLACK CRGB(0, 0, 0)
+
+/* Wall of LEDs */
+static CRGB leds[NUM_LEDS];
+
 /* A circular buffer used to perform moving means. */
 static uint16_t mm_buffer[MM_DISTANCE_BUFSIZE];
 static unsigned char mm_buffer_idx = 0u;
+
+static inline void
+leds_color_set(CRGB crgb)
+{
+  for (unsigned char i = 0u; i < NUM_LEDS; i++)
+  { leds[i] = crgb; }
+  FastLED.show();
+}
+
+static void
+leds_init(void)
+{
+  FastLED.addLeds<
+    LED_TYPE,
+    PIN_LED_WALL,
+    COLOR_ORDER
+  >(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  FastLED.setBrightness(255);
+  leds_color_set(COLOR_BLACK);
+}
 
 /* Read the first echo received by the SRF08. */
 static uint16_t
@@ -115,14 +145,13 @@ void setup(void)
   pinMode(PIN_ELECTROMAGNET, OUTPUT);
   digitalWrite(PIN_ELECTROMAGNET, LOW);
 
+  /* Prepare LED lights */
+  leds_init();
+  Serial.begin(9600);
+
   /* Connect to the I2C bus as a master. We will initiate rangings and read
    * from the SRF08 Ultra sonic range finder */
   Wire.begin();
-  Serial.begin(9600);
-
-  /* Setup a LED, to have a fancy debug */
-  pinMode(PIN_LED, OUTPUT);
-  digitalWrite(PIN_LED, LOW);
 
   /* Setup the maximum range of the SRF08 */
   Wire.beginTransmission(SRF08_ADDR);
@@ -138,25 +167,24 @@ void setup(void)
 
 void loop(void)
 {
+  static boolean robot_is_gone = false;
   const uint16_t measure = srf08_acquire();
   mm_distance_add(measure);
 
   const uint16_t mm_distance = mm_distance_calculate();
-  if (mm_distance < MM_DISTANCE_THRESHOLD)
+
+  Serial.println(mm_distance); /* Debug */
+  if ((mm_distance < MM_DISTANCE_THRESHOLD) && (! robot_is_gone))
   {
-    Serial.println("The robot is gone!");
+    robot_is_gone = true;
+    /* The robot is gone: pink power */
+    leds_color_set(COLOR_PINK);
 
+    /* Start the electromagnet... full power. After 1 sec, disable the
+     * electromagnet. */
     digitalWrite(PIN_ELECTROMAGNET, HIGH);
-    digitalWrite(PIN_LED, HIGH);
-
-    /* After 1 sec, disable the electromagnet */
     delay(1000);
     digitalWrite(PIN_ELECTROMAGNET, LOW);
-  }
-  else /* Debug */
-  {
-    digitalWrite(PIN_LED, LOW);
-    Serial.println(mm_distance);
   }
 
   delay(10); /* IDLE for 10 ms */
