@@ -1,1 +1,0 @@
-Lib used : FastLED by Daniel Garcia v3.2.1

@@ -153,7 +153,7 @@ void loop(void)
     delay(1000);
     digitalWrite(PIN_ELECTROMAGNET, LOW);
   }
-  else
+  else /* Debug */
   {
     digitalWrite(PIN_LED, LOW);
     Serial.println(mm_distance);
