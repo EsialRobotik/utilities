@@ -256,6 +256,13 @@ $( function() {
             	compliance: parseInt(action.find(".action-subitem__behaviour-compliance").val())
             }
         }
+        
+        if (action.hasClass('action-subitem__disable-torque')) {
+            return {
+                actionId: "actionDisableTorque",
+                ax12Id: parseInt(action.find(".action-subitem__disable-torque-id").val()),
+            }
+        }
         // default : undefined
     }
     
@@ -312,6 +319,10 @@ $( function() {
             	elt.find(".action-subitem__behaviour-speed").val(params.speed);
             	elt.find(".action-subitem__behaviour-acceleration").val(params.acceleration);
             	elt.find(".action-subitem__behaviour-compliance").val(params.compliance);
+            	break;
+            case "disableTorque":
+            	elt = $("#templates .action-subitem__disable-torque").clone();
+            	elt.find(".action-subitem__disable-torque-id").val(params.ax12Id);
             	break;
             default:
                 elt = $('<div class="action-subitem">');
@@ -399,6 +410,11 @@ $( function() {
                         	compliance: action.compliance
                     	});
                     break;
+                    case "actionDisableTorque":
+	                	actionSubitem = cloneTemplate("disableTorque", {
+	                    	ax12Id: action.ax12Id
+	                	});
+                	break;
                 }
                 
                 if (actionSubitem) {
@@ -598,6 +614,20 @@ $( function() {
         }
     }
     
+    const recordDisableTorque = function() {
+    	const poolElt = newActionPool("Pool #" + (getPoolItemCount() + 1), true);
+        getAx12IdsToRecord().forEach((axId) => {
+        	const disableTorqueTemplate = cloneTemplate("disableTorque", {
+            	ax12Id: axId
+        	});
+        	poolElt.append(disableTorqueTemplate);
+        });
+        
+        if (poolElt.length > 0) {
+        	addPoolItem(poolElt, true, true);	
+        }
+    }
+    
     const loadFileList = function() {
     	doajax('get', '/api/file/list')
     	.then((files) => {
@@ -705,8 +735,8 @@ $( function() {
     $(".actions-records").find(".actions-records__pump .ui-icon-power").eq(0).parent().click(() => {recordPoolPump(true)}); // Bouton allumer pompe
     $(".actions-records").find(".actions-records__pump .ui-icon-power").eq(1).parent().click(() => {recordPoolPump(false)}); // Bouton éteindre pompe
     $(".actions-records").find(".actions-records__delay button").click(recordPoolDelay); // Bouton délais
-    $(".actions-records").find(".actions-records__behaviour button").click(recordBehaviour);// Vitesse / accélération / précision
-
+    $(".actions-records").find(".actions-records__behaviour-record").click(recordBehaviour);// Vitesse / accélération / précision
+    $(".actions-records").find(".actions-records__behaviour-disable-torque").click(recordDisableTorque); // Désactivation du torque
     // Paramètres globaux
     $(".actions-records").find(".actions-records__factors .actions-records__factors-release").click(releaseAx12); // Relâcher les AX
     $(".actions-records").find(".actions-records__factors .actions-records__factors-pump-on").click(() => enablePumps(true)); // Activer les pompes

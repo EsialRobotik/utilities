@@ -69,12 +69,15 @@
                 <td><input data-spinner class="actions-records__behaviour-acceleration" size="4" value="15" /></td>
                 <td><input data-spinner class="actions-records__behaviour-compliance" size="4" value="2" /></td>
                 <td>
-                    <button class="ui-button ui-widget ui-corner-all ui-button-icon-only ui-button-icon-only--max" title="Ajouter">
+                    <button class="ui-button ui-widget ui-corner-all ui-button-icon-only ui-button-icon-only--max actions-records__behaviour-record" title="Ajouter">
                         <span class="ui-icon ui-icon-plus"></span>
                     </button>
                 </td>
             </tr>
             </table>
+            <button class="ui-button ui-widget ui-corner-all actions-records__behaviour-disable-torque">
+                <span class="ui-icon ui-icon-power"></span> Désactiver le couple
+            </button>
         </fieldset>
         
         <h3>Paramètres globaux</h3>
@@ -200,6 +203,7 @@
                   <option value="8">8</option>
                   <option value="9">9</option>
                   <option value="10">10</option>
+                  <option value="10">254<</option>
                 </select>#
             </div><div>
                 <table>
@@ -207,6 +211,28 @@
                     <tr><td>Acc.</td><td><input class="action-subitem__behaviour-acceleration" size="4" /></td></tr>
                     <tr><td>Pre.</td><td><input class="action-subitem__behaviour-compliance" size="4" /></td></tr>
                 </table>
+            </div>
+            <button class="ui-button ui-widget ui-corner-all ui-button-icon-only  ui-button-icon-only--max" title="Supprimer">
+                <span class="ui-icon ui-icon-trash"></span>
+            </button>
+        </div>
+        
+        <div class="action-subitem action-subitem__disable-torque">
+            Disable torque
+            <div>
+                AX12 <select class="action-subitem__disable-torque-id">
+                  <option selected="selected" value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="10">254<</option>
+                </select>#
             </div>
             <button class="ui-button ui-widget ui-corner-all ui-button-icon-only  ui-button-icon-only--max" title="Supprimer">
                 <span class="ui-icon ui-icon-trash"></span>
