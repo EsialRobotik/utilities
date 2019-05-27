@@ -10,6 +10,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import ax12.AX12;
 import ax12.AX12Exception;
+import ax12.AX12Link;
 import ax12.AX12LinkException;
 import ax12.value.AX12Compliance;
 import web.AX12Http;
@@ -37,6 +38,10 @@ public class SettingsHandler extends AbstractHandler {
 		
 		if (factor.equals("behaviour")) {
 			handleBehaviour(o);	
+		}
+		
+		if (factor.equals("pumps")) {
+			handlePumps(o);	
 		}
 		
 		this.sendResponse(t, "{\"status\":\"ok\"}", 200);
@@ -77,6 +82,18 @@ public class SettingsHandler extends AbstractHandler {
 			} catch (AX12LinkException | AX12Exception | IllegalArgumentException e) {
 				throw new HandlerException("Erreur de relache de l'AX #"+ax.getAddress()+" : "+e.getMessage(), 500);
 			}
+		}
+	}
+	
+	protected void handlePumps(JsonObject o) throws HandlerException {
+		
+		boolean enable = o.get("enable").getAsBoolean();
+		AX12Link a = this.ax12Http.getAx12Link();
+		try {
+			a.enableDtr(enable);
+			a.enableRts(enable);
+		} catch (AX12LinkException e) {
+			e.printStackTrace();
 		}
 	}
 	

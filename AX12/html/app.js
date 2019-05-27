@@ -642,6 +642,13 @@ $( function() {
         }).catch(handleAjaxError);
     }
     
+    const enablePumps = function(enable) {
+        doajax('post', '/api/settings', {
+            settings: 'pumps',
+            enable: enable
+        }).catch(handleAjaxError);
+    }
+    
     const bindDragNDropArea = function (elt) {
         elt.on('dragenter', function() {
             $(this).css('border', '2px dashed red');
@@ -701,7 +708,9 @@ $( function() {
     $(".actions-records").find(".actions-records__behaviour button").click(recordBehaviour);// Vitesse / accélération / précision
 
     // Paramètres globaux
-    $(".actions-records").find(".actions-records__factors .ui-icon-heart").parent().click(releaseAx12); // Relâcher les AX
+    $(".actions-records").find(".actions-records__factors .actions-records__factors-release").click(releaseAx12); // Relâcher les AX
+    $(".actions-records").find(".actions-records__factors .actions-records__factors-pump-on").click(() => enablePumps(true)); // Activer les pompes
+    $(".actions-records").find(".actions-records__factors .actions-records__factors-pump-off").click(() => enablePumps(false)); // Eteindre les pompes
     $(".actions-records").find(".actions-records__json .ui-icon-arrowthickstop-1-s").parent().click(downloadActionPools); // Télécharger le Json
     bindDragNDropArea($(".actions-records").find(".actions-records__json .actions-records__json--drop-area")) // Charger un fichier Json par drag'n'drop
     loadFileList(); // Chargement de la liste des fichiers JSon
