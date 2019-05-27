@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -63,6 +64,8 @@ public class FileHandler extends AbstractHandler {
 				return pathname.isFile() && pathname.getName().toLowerCase().endsWith(".json");
 			}
 		});
+		
+		Arrays.sort(files);
 		
 		JsonArray jsa = new JsonArray();
 		for (File f : files) {
