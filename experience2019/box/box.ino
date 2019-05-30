@@ -21,6 +21,9 @@
  */
 #define MM_DISTANCE_BUFSIZE 16u
 
+/* Duration during which the elctromagnets are turned on */
+#define MAGNET_TIMEOUT_MS 10000 /* 10 s */
+
 /* The SRF08 can have its maximum range restricted by writing the register #2
  * with a magic value that is calculated with the following formula (units are
  * in millimeters) :
@@ -183,7 +186,7 @@ void loop(void)
     /* Start the electromagnet... full power. After 1 sec, disable the
      * electromagnet. */
     digitalWrite(PIN_ELECTROMAGNET, HIGH);
-    delay(1000);
+    delay(MAGNET_TIMEOUT_MS);
     digitalWrite(PIN_ELECTROMAGNET, LOW);
   }
 

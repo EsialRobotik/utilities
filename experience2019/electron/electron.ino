@@ -14,7 +14,7 @@
 #define PIN_LED 0       /* PIN0 */
 
 /* Duration (in milliseconds) during which the motor must be turned on */
-#define MOTOR_ACTIVATION_TIME_MS 30000 /* 30 s */
+#define MOTOR_ACTIVATION_TIME_MS 10000 /* 10 s */
 
 
 static inline boolean
