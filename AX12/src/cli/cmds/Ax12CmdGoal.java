@@ -1,6 +1,8 @@
 package cli.cmds;
 
+import ax12.AX12Exception;
 import ax12.AX12LinkException;
+import ax12.value.AX12Position;
 import cli.AX12MainConsole;
 
 public class Ax12CmdGoal extends Ax12Cmd{
@@ -17,8 +19,8 @@ public class Ax12CmdGoal extends Ax12Cmd{
 			System.out.println("Usage : ");
 		} else {
 			try {
-				cli.getCurrentAx12().setServoPositionInDegrees(this.goal);
-			} catch (IllegalArgumentException | AX12LinkException e) {
+				cli.getCurrentAx12().setServoPosition(AX12Position.buildFromDegrees(this.goal));
+			} catch (IllegalArgumentException | AX12LinkException | AX12Exception e) {
 				throw new Ax12CmdException("Erreur avec l'AX12 : "+e.getMessage(), e);
 			}	
 		}

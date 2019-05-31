@@ -1,5 +1,6 @@
 package cli.cmds;
 
+import ax12.AX12Exception;
 import ax12.AX12LinkException;
 import cli.AX12MainConsole;
 
@@ -42,7 +43,7 @@ public class Ax12CmdAddress extends Ax12Cmd {
 				}
 				try {
 					cli.getCurrentAx12().writeAddress(address);
-				} catch (AX12LinkException | IllegalArgumentException e) {
+				} catch (AX12LinkException | IllegalArgumentException | AX12Exception e) {
 					throw new Ax12CmdException("Erreur d'écriture d'adresse", e);
 				}
 			} else {

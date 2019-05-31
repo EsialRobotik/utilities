@@ -1,15 +1,14 @@
 package cli.cmds;
 
-import java.text.NumberFormat;
-
 import ax12.AX12;
 import ax12.AX12LinkException;
 import ax12.AX12LinkSerial;
 import ax12.AX12.AX12_UART_SPEEDS;
+import ax12.AX12Exception;
 import cli.AX12MainConsole;
 import gnu.io.SerialPort;
 
-public class AX12CmdUarts extends Ax12Cmd{
+public class AX12CmdUarts extends Ax12Cmd {
 	
 	private String subCommand;
 	private String subArg;
@@ -23,6 +22,10 @@ public class AX12CmdUarts extends Ax12Cmd{
 	}
 	
 	public AX12CmdUarts(String subCommand, String subArg) {
+		this(subCommand, subArg, true);
+	}
+	
+	public AX12CmdUarts(String subCommand, String subArg, Boolean combineRxTx) {
 		this.subCommand = subCommand == null ? null : subCommand.toLowerCase();
 		this.subArg = subArg;
 	}
@@ -32,7 +35,7 @@ public class AX12CmdUarts extends Ax12Cmd{
 		if (this.subCommand == null || this.subCommand.equals("infos")) {
 			AX12LinkSerial asc = cli.getAx12SerialCommunicator();
 			if (asc != null) {
-				System.out.println("UART courant : "+asc.getUartName()+"@"+asc.getBaudRate()+"bps");	
+				System.out.println("UART courant : "+asc.getUartName()+"@"+asc.getBaudRate()+"bps");
 				System.out.println("Usage : "+getUsage());
 			} else {
 				System.out.println("Aucun UART connecté.");
@@ -107,7 +110,7 @@ public class AX12CmdUarts extends Ax12Cmd{
 					try {
 						a.writeUartSpeed(AX12_UART_SPEEDS.SPEED_1000000);
 						Thread.sleep(150);
-					} catch (InterruptedException | AX12LinkException e) {
+					} catch (InterruptedException | AX12LinkException | AX12Exception e) {
 						e.printStackTrace();
 						return;
 					}
@@ -142,7 +145,7 @@ public class AX12CmdUarts extends Ax12Cmd{
 			try {
 				cli.getCurrentAx12().writeUartSpeed(speed);
 				cli.getAx12SerialCommunicator().setBaudRate(speed.intVal);
-			} catch (AX12LinkException e) {
+			} catch (AX12LinkException | AX12Exception e) {
 				throw new Ax12CmdException("Erreur d'écriture de la vitesse", e);
 			}
 		} else {
