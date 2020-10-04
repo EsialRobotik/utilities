@@ -25,7 +25,7 @@ import esialrobotik.ia.actions.a2018.eau.Remplissage;
 import esialrobotik.ia.actions.a2018.eau.RemplissagePreparation;
 import esialrobotik.ia.actions.a2018.eau.RemplissageRangement;
 
-public class ActionsPanel extends JFrame {
+public class ActionsPanel2019 extends JFrame {
 
 	/**
 	 * 
@@ -51,7 +51,7 @@ public class ActionsPanel extends JFrame {
 		new RangementTubes(),
 	};
 	
-	public ActionsPanel(AX12LinkSerial ax12link) {
+	public ActionsPanel2019(AX12LinkSerial ax12link) {
 		super("AX actions");
 		this.al = ax12link;
 		this.makeGui();

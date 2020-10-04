@@ -376,7 +376,7 @@ public class AX12 {
 	 */
 	public void setCwComplianceSlope(int value) throws AX12LinkException, AX12Exception {
 		if (value < 0 || value > 254) {
-			throw new RuntimeException("La valeur doit être comprise entre 0 et 255. Reçu "+value);
+			throw new RuntimeException("La valeur doit être comprise entre 0 et 254. Reçu "+value);
 		}
 		this.write(AX12_Register.AX12_RAM_CW_COMPILANCE_SLOPE, value);
 	}

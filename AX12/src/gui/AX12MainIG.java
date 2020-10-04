@@ -184,7 +184,7 @@ public class AX12MainIG extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ActionsPanel ap = new ActionsPanel(currentAx12Link);
+				ActionsPanel2020 ap = new ActionsPanel2020(currentAx12Link);
 				ap.pack();
 				ap.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				ap.setVisible(true);
