@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by franc on 27/04/2018.
  */
-public class Main {
+public class Main2019 {
 
     public static void main(String... arg) throws Exception {
         System.out.println("Génération de la stratégie");
