@@ -75,7 +75,7 @@ public class Main2020 {
         Objectif objectifBoueeS0 = new Objectif("Bouée Sud", objectifsCouleur0.size()+1, score, 1, tachesBoueeSud);
         Objectif objectifBoueeS3000 = new Objectif("Bouée Sud", objectifsCouleur3000.size()+1, score, 1, null);
         try {
-            objectifBoueeN3000.generateMirror(objectifBoueeS0.taches);
+            objectifBoueeS3000.generateMirror(objectifBoueeS0.taches);
         } catch (Exception e) {
             e.printStackTrace();
         }
