@@ -43,6 +43,8 @@ public class Tache {
         GOTO_BACK("goto_back"),
         @SerializedName("goto_astar")
         GOTO_ASTAR("goto_astar"),
+        @SerializedName("set_speed")
+        SET_SPEED("set_speed"),
         ;
 
         private final String text;
