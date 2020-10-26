@@ -61,7 +61,7 @@ public class Main2020 {
         tachesPhare.add(new Tache("Placement phare", tachesPhare.size()+1, 280, 225, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesPhare.add(new Tache("Alignement phare", tachesPhare.size()+1, 0, 225, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
         tachesPhare.add(new Tache("Preparation phare", tachesPhare.size()+1, 0, Tache.Type.MANIPULATION, null, 11, Tache.Mirror.MIRRORY));
-        tachesPhare.add(new Tache("Allumage phare", tachesPhare.size()+1, 145, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY, 1500));
+        tachesPhare.add(new Tache("Allumage phare", tachesPhare.size()+1, 150, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY, 1500));
         tachesPhare.add(new Tache("Sortie zone N", tachesPhare.size()+1, -100, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
         tachesPhare.add(new Tache("On remet tout en place", tachesPhare.size()+1, 0, Tache.Type.MANIPULATION, null, 0, Tache.Mirror.MIRRORY, 1500));
         tachesPhare.add(new Tache("Sortie zone N", tachesPhare.size()+1, 610, 670, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
@@ -77,14 +77,35 @@ public class Main2020 {
 
 
         /**
+         * On fait de la place avec la bouée Sud
+         * Score = Bouée placée (1) = 1
+         */
+        score = 1;
+        List<Tache> tachesBoueeSud =  new ArrayList<>();
+        tachesBoueeSud.add(new Tache("Placement bouée Sud à virer", tachesBoueeSud.size()+1, 1500, 670, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesBoueeSud.add(new Tache("Placement bouée Sud à virer", tachesBoueeSud.size()+1, 1500, 230, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesBoueeSud.add(new Tache("Placement bouée Sud à virer", tachesBoueeSud.size()+1, 0, 230, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+        tachesBoueeSud.add(new Tache("Marquage bouée Sud à virer", tachesBoueeSud.size()+1, 250, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
+        tachesBoueeSud.add(new Tache("Marquage bouée Sud à virer", tachesBoueeSud.size()+1, 140, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
+        tachesBoueeSud.add(new Tache("Libération bouée Sud à virer", tachesBoueeSud.size()+1, 1400, 230, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO_BACK, -1, Tache.Mirror.MIRRORY));
+        Objectif objectifBoueeS0 = new Objectif("Bouée Sud à virer", objectifsCouleur0.size()+1, score, 1, tachesBoueeSud);
+        Objectif objectifBoueeS3000 = new Objectif("Bouée Sud à virer", objectifsCouleur3000.size()+1, score, 1, null);
+        try {
+            objectifBoueeS3000.generateMirror(objectifBoueeS0.taches);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        objectifsCouleur0.add(objectifBoueeS0);
+        objectifsCouleur3000.add(objectifBoueeS3000);
+
+
+        /**
          * On va taper les manches à air
          * Score = 15 pour les 2
          */
         score = 15;
         List<Tache> tachesManches =  new ArrayList<>();
         List<Tache> tachesManches3000 =  new ArrayList<>();
-        tachesManches.add(new Tache("Placement manche à air", tachesManches.size()+1, 1500, 670, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
-        tachesManches.add(new Tache("Placement manche à air", tachesManches.size()+1, 1500, 230, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesManches.add(new Tache("Placement manche à air", tachesManches.size()+1, 1780, 210, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesManches.add(new Tache("Alignement manche à air", tachesManches.size()+1, 1780, 3000, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
         tachesManches.add(new Tache("Alignement manche à air", tachesManches.size()+1, -120, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY, 500));
@@ -101,6 +122,8 @@ public class Main2020 {
         tachesManches.add(new Tache("Rentrer bras droit", rentrerBras, 0, Tache.Type.MANIPULATION, null, 3, Tache.Mirror.SPECIFIC));
         tachesManches3000.add(new Tache("Rentrer bras gauche", rentrerBras, 0, Tache.Type.MANIPULATION, null, 4, Tache.Mirror.SPECIFIC));
         tachesManches.add(new Tache("On quitte la zone", tachesManches.size()+1, -50, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
+        tachesManches.add(new Tache("Alignement boussole", tachesManches.size()+1, 0, 1500, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+        tachesManches.add(new Tache("Photo", tachesManches.size()+1, 0, Tache.Type.MANIPULATION, null, 13, Tache.Mirror.MIRRORY));
         Objectif objectifManches0 = new Objectif("Manches à air", objectifsCouleur0.size()+1, score, 1, tachesManches);
         Objectif objectifManches3000 = new Objectif("Manches à air", objectifsCouleur3000.size()+1, score, 1, null);
         try {
@@ -114,22 +137,24 @@ public class Main2020 {
 
         /**
          * On vide le récif de notre couleur et on largue les impaire
-         * Score = 3 bouées (3) + 3 chenal (3) + 1 paires (2) + Bouées sudà virer (1) = 9
+         * Score = 3 bouées (3) + 3 chenal (3) + 1 paires (2) = 8
          */
-        score = 9;
+        score = 8;
         List<Tache> tachesRecifS =  new ArrayList<>();
-        tachesRecifS.add(new Tache("Placement recif sud", tachesRecifS.size()+1, 1600, 230, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
-        tachesRecifS.add(new Tache("Alignement recif sud", tachesRecifS.size()+1, 1600, 0, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
+        tachesRecifS.add(new Tache("Placement recif sud", tachesRecifS.size()+1, 1595, 230, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesRecifS.add(new Tache("Alignement recif sud", tachesRecifS.size()+1, 1595, 0, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Preparer ramassage recif sud", tachesRecifS.size()+1, 0, Tache.Type.MANIPULATION, null, 5, Tache.Mirror.MIRRORY));
-        tachesRecifS.add(new Tache("Mise en position rammassage recif sud", tachesRecifS.size()+1, 1600, 130, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
+        tachesRecifS.add(new Tache("Mise en position rammassage recif sud", tachesRecifS.size()+1, 1595, 130, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Mise en position rammassage recif sud", tachesRecifS.size()+1, 130, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY, 500));
         tachesRecifS.add(new Tache("Ramassage recif sud", tachesRecifS.size()+1, 0, Tache.Type.MANIPULATION, null, 6, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Libération ramassage recif sud", tachesRecifS.size()+1, 0, Tache.Type.MANIPULATION, null, 7, Tache.Mirror.MIRRORY));
-        tachesRecifS.add(new Tache("Sortie recif sud", tachesRecifS.size()+1, 1600, 230, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO_BACK, -1, Tache.Mirror.MIRRORY));
+        tachesRecifS.add(new Tache("Sortie recif sud", tachesRecifS.size()+1, 1595, 230, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO_BACK, -1, Tache.Mirror.MIRRORY));
+        tachesRecifS.add(new Tache("On réduit la vitesse", tachesRecifS.size()+1, 30, Tache.Type.DEPLACEMENT, Tache.SubType.SET_SPEED, -1, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Placement largage sud", tachesRecifS.size()+1, 1250, 200, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Alignement largage sud", tachesRecifS.size()+1, 0, 200, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Préparer largage recif sud", tachesRecifS.size()+1, 0, Tache.Type.MANIPULATION, null, 8, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Largage impaire recif sud", tachesRecifS.size()+1, 0, Tache.Type.MANIPULATION, null, 9, Tache.Mirror.MIRRORY));
+        tachesRecifS.add(new Tache("On remet la vitesse", tachesRecifS.size()+1, 100, Tache.Type.DEPLACEMENT, Tache.SubType.SET_SPEED, -1, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Sortie largage sud", tachesRecifS.size()+1, -200, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
 
         Objectif objectifRecifS0 = new Objectif("Récif sud", objectifsCouleur0.size()+1, score, 1, tachesRecifS);
@@ -189,25 +214,6 @@ public class Main2020 {
 //        }
 //        objectifsCouleur0.add(objectifBoueeSChenal0);
 //        objectifsCouleur3000.add(objectifBoueeSChenal3000);
-
-        /**
-         * On prend en photo la boussole
-         * Score = 0
-         */
-        score = 0;
-        List<Tache> tachesBoussole =  new ArrayList<>();
-        tachesBoussole.add(new Tache("Placement boussole", tachesBoussole.size()+1, 800, 1000, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
-        tachesBoussole.add(new Tache("Alignement boussole", tachesBoussole.size()+1, 0, 1500, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
-        tachesBoussole.add(new Tache("Photo", tachesBoussole.size()+1, 0, Tache.Type.MANIPULATION, null, 12, Tache.Mirror.MIRRORY));
-        Objectif objectifBoussole0 = new Objectif("Boussole", objectifsCouleur0.size()+1, score, 1, tachesBoussole);
-        Objectif objectifBoussole3000 = new Objectif("Boussole", objectifsCouleur3000.size()+1, score, 1, null);
-        try {
-            objectifBoussole3000.generateMirror(objectifBoussole0.taches);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        objectifsCouleur0.add(objectifBoussole0);
-        objectifsCouleur3000.add(objectifBoussole3000);
 
         // Création de la stratégie complète
         Strategie strat = new Strategie();
