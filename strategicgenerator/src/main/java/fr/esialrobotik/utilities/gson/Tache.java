@@ -37,6 +37,8 @@ public class Tache {
         GO("go"),
         @SerializedName("goto")
         GOTO("goto"),
+        @SerializedName("goto_chain")
+        GOTO_CHAIN("goto_chain"),
         @SerializedName("face")
         FACE("face"),
         @SerializedName("goto_back")
