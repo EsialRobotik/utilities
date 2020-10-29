@@ -115,8 +115,8 @@ public class Main2020 {
         tachesManches.add(new Tache("Réduction de la vitesse", tachesManches.size()+1, 50, Tache.Type.DEPLACEMENT, Tache.SubType.SET_SPEED, -1, Tache.Mirror.MIRRORY));
         tachesManches.add(new Tache("Taper les manches", tachesManches.size()+1, 200, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
         tachesManches.add(new Tache("Alignement manche à air", tachesManches.size()+1, 1780, 3000, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
-        tachesManches.add(new Tache("Taper les manches", tachesManches.size()+1, 250, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
-        tachesManches.add(new Tache("Taper les manches", tachesManches.size()+1, 140, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
+        tachesManches.add(new Tache("Taper les manches", tachesManches.size()+1, 250+140, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
+//        tachesManches.add(new Tache("Taper les manches", tachesManches.size()+1, 140, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY));
         tachesManches.add(new Tache("Vitesse normale", tachesManches.size()+1, 100, Tache.Type.DEPLACEMENT, Tache.SubType.SET_SPEED, -1, Tache.Mirror.MIRRORY));
         int rentrerBras = tachesManches.size()+1;
         tachesManches.add(new Tache("Rentrer bras droit", rentrerBras, 0, Tache.Type.MANIPULATION, null, 3, Tache.Mirror.SPECIFIC));
@@ -141,9 +141,9 @@ public class Main2020 {
          */
         score = 8;
         List<Tache> tachesRecifS =  new ArrayList<>();
+        tachesRecifS.add(new Tache("Preparer ramassage recif sud", tachesRecifS.size()+1, 0, Tache.Type.MANIPULATION, null, 5, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Placement recif sud", tachesRecifS.size()+1, 1595, 230, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Alignement recif sud", tachesRecifS.size()+1, 1595, 0, Tache.Type.DEPLACEMENT, Tache.SubType.FACE, -1, Tache.Mirror.MIRRORY));
-        tachesRecifS.add(new Tache("Preparer ramassage recif sud", tachesRecifS.size()+1, 0, Tache.Type.MANIPULATION, null, 5, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Mise en position rammassage recif sud", tachesRecifS.size()+1, 1595, 130, Tache.Type.DEPLACEMENT, Tache.SubType.GOTO, -1, Tache.Mirror.MIRRORY));
         tachesRecifS.add(new Tache("Mise en position rammassage recif sud", tachesRecifS.size()+1, 130, Tache.Type.DEPLACEMENT, Tache.SubType.GO, -1, Tache.Mirror.MIRRORY, 500));
         tachesRecifS.add(new Tache("Ramassage recif sud", tachesRecifS.size()+1, 0, Tache.Type.MANIPULATION, null, 6, Tache.Mirror.MIRRORY));
