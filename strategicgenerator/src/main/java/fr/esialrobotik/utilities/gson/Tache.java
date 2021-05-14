@@ -11,7 +11,9 @@ public class Tache {
         @SerializedName("deplacement")
         DEPLACEMENT("deplacement"),
         @SerializedName("manipulation")
-        MANIPULATION("manipulation")
+        MANIPULATION("manipulation"),
+        @SerializedName("element")
+        ELEMENT("element")
         ;
 
         private final String text;
@@ -47,6 +49,10 @@ public class Tache {
         GOTO_ASTAR("goto_astar"),
         @SerializedName("set_speed")
         SET_SPEED("set_speed"),
+        @SerializedName("suppression")
+        SUPPRESSION("suppression"),
+        @SerializedName("ajout")
+        AJOUT("ajout")
         ;
 
         private final String text;
@@ -80,6 +86,7 @@ public class Tache {
     public int dist;
     public Type type;
     public SubType subtype;
+    public String itemId;
     public int actionId;
     public Mirror mirror;
     public int timeout = -1;
@@ -114,6 +121,15 @@ public class Tache {
         this.actionId = actionId;
         this.mirror = mirror;
         this.timeout = timeout;
+    }
+
+    public Tache(String desc, int id, Type type, SubType subtype, String itemId, Mirror mirror) {
+        this.desc = desc;
+        this.id = id;
+        this.type = type;
+        this.subtype = subtype;
+        this.itemId = "0_" + itemId;
+        this.mirror = mirror;
     }
 
     public Tache() {

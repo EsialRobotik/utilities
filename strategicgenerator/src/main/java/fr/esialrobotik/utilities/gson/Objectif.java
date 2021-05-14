@@ -48,6 +48,9 @@ public class Objectif {
             } else if (tache.mirror == Tache.Mirror.MIRRORY) {
                 Tache t = new Tache(tache);
                 t.positionY = 3000 - t.positionY;
+                if (t.itemId != null) {
+                    t.itemId = t.itemId.replace("0_", "3000_");
+                }
                 this.taches.add(t);
             }
         }
