@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,6 +46,7 @@ public class AX12ControlPanel extends JFrame {
 	private JButton btn_voltage;
 	private JButton btn_is_moving;
 	private JButton btn_current_angle;
+	private JButton btn_reset;
 	
 	private JLabel lib_angle;
 	private JLabel lib_marge_erreur;
@@ -54,21 +57,29 @@ public class AX12ControlPanel extends JFrame {
 	public AX12ControlPanel(AX12 ax12) {
 		super("AX12 ID "+ax12.getAddress());
 		this.ax12 = ax12;
-		initGui();
+		int initialValue = 1800;
+		if (ax12.isBroadcasting()) {
+		//	btn_ping.setVisible(false);
+		} else {
+			try {
+				initialValue = (int) (ax12.readServoPosition().getAngleAsDegrees())*10;
+			} catch (AX12LinkException | AX12Exception e) {
+				e.printStackTrace();
+			}
+		}
+		initGui(initialValue);
 		drawGui();
 		connectListeners();
-		if (ax12.isBroadcasting()) {
-			btn_ping.setVisible(false);
-		}
 	}
 	
-	private void initGui() {
-		slider_angle = new JSlider(JSlider.VERTICAL, (int)(AX12.AX12_MIN_ANGLE_DEGREES * 10), (int)(AX12.AX12_MAX_ANGLE_DEGREES * 10), 1800);
+	private void initGui(int initialValue) {
+		slider_angle = new JSlider(JSlider.VERTICAL, (int)(AX12.AX12_MIN_ANGLE_DEGREES * 10), (int)(AX12.AX12_MAX_ANGLE_DEGREES * 10), initialValue);
 		slider_marge_erreur = new JSlider(JSlider.VERTICAL, 1, 7, 3);
 		slider_pente_acceleration = new JSlider(JSlider.VERTICAL, 1, 254, 128);
 		btn_toggle_led = new JButton("LED ON");
 		btn_ping = new JButton("PING");
 		btn_current_angle = new JButton("Angle actuel");
+		btn_reset = new JButton("Factory Reset");
 		btn_temperature = new JButton("Température");
 		btn_voltage = new JButton("Voltage");
 		btn_is_moving = new JButton("En mouvment ?");
@@ -98,6 +109,7 @@ public class AX12ControlPanel extends JFrame {
 	
 	private void drawGui() {
 		this.setLayout(new FlowLayout());
+
 		this.add(slider_angle);
 		this.add(lib_angle);
 		this.add(slider_marge_erreur);
@@ -109,6 +121,7 @@ public class AX12ControlPanel extends JFrame {
 		this.add(btn_temperature);
 		this.add(btn_voltage);
 		this.add(btn_current_angle);
+		this.add(btn_reset);
 		this.add(txt_limit_temp);
 		this.add(new JLabel("°c"));
 		this.add(btn_is_moving);
@@ -198,6 +211,19 @@ public class AX12ControlPanel extends JFrame {
 				try {
 					JOptionPane.showMessageDialog(AX12ControlPanel.this, AX12ControlPanel.this.ax12.ping() ? "OK" : "KO");
 				} catch (HeadlessException | AX12LinkException e1) {
+					JOptionPane.showMessageDialog(AX12ControlPanel.this, "KO : "+e1.getMessage());
+				}
+			}
+		});
+		
+		btn_reset.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AX12ControlPanel.this.ax12.reset();
+					JOptionPane.showMessageDialog(AX12ControlPanel.this, "reset");
+				} catch (HeadlessException | AX12Exception | AX12LinkException e1) {
 					JOptionPane.showMessageDialog(AX12ControlPanel.this, "KO : "+e1.getMessage());
 				}
 			}

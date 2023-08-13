@@ -13,7 +13,7 @@
 	<property name="project.lib.dir" value="libs"/>
 
 	
-	<property name="project.version" value="2019" />
+	<property name="project.version" value="2020" />
 	<property name="project.output" value="C:/Users/gryttix/Desktop/configPrincesse${project.version}" />
 	<property name="project.output.html" value="${project.output}/html" />
 	<property name="project.output.temp" value="${project.output}/temp" />

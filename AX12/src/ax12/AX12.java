@@ -34,6 +34,10 @@ public class AX12 {
 	  }
 	};
 	
+	public void reset() throws AX12LinkException, AX12Exception {
+		this.sendRequest(AX12_Instr.AX12_INSTR_RESET, new byte[0]);
+	}
+	
 	// AX12 registers
 	public enum AX12_Register {
 	  AX12_EEPROM_MODEL_NUMBER(0x00, 2, false),
@@ -179,7 +183,7 @@ public class AX12 {
 	}
 	
 	public int getAddress() {
-		return this.addr;
+		return AX12.unsignedByteToInt(this.addr);
 	}
 
 	/**

@@ -15,14 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import ax12.AX12;
-import ax12.AX12Link;
 import ax12.AX12LinkException;
 import ax12.AX12LinkSerial;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
-import gui.inputcollector.AX12InputCollector;
 import main.AX12Main;
 
 public class AX12MainIG extends JFrame{
@@ -35,17 +33,19 @@ public class AX12MainIG extends JFrame{
 	private JButton btn_broadcast;
 	private JButton[] btns_Ax12s;
 	private JButton btn_scan;
-	private JButton btn_shotcuts;
-	private JButton btn_actions;
-	private JButton btn_input_collector;
 	
 	private AX12LinkSerial currentAx12Link;
 	private SerialPort serialPort;
 	private boolean combinedRxTx;
 	
+	private boolean requestScanStop;
+	private Thread runningScan;
+	
 	public AX12MainIG(String title, boolean combinedRxTx) {
 		super(title);
 		this.combinedRxTx = combinedRxTx;
+		this.requestScanStop = false;
+		this.runningScan = null;
 		
 		initIg();
 		drawIg();
@@ -88,18 +88,15 @@ public class AX12MainIG extends JFrame{
 			cbo_uart_speeds.addItem(speed);
 		}
 		cbo_uart_speeds.setSelectedItem(AX12.AX12_UART_SPEEDS.SPEED_115200);
-		btn_refresh_combo = new JButton("Recharger liste");
+		btn_refresh_combo = new JButton("Reload serial ports list");
 		btn_broadcast = new JButton("AX12 BroadCast");
 		
 		btns_Ax12s = new JButton[254];
 		for (int i=0; i<btns_Ax12s.length; i++) {
-			btns_Ax12s[i] = new JButton(""+(i));	
+			btns_Ax12s[i] = new JButton((i)+"?");	
 		}
 		
-		btn_scan = new JButton("Scanner");
-		btn_shotcuts = new JButton("Raccourcis");
-		btn_actions = new JButton("Actions");
-		btn_input_collector = new JButton("Input collector");
+		btn_scan = new JButton("Scan");
 	}
 	
 	private void drawIg() {
@@ -109,11 +106,8 @@ public class AX12MainIG extends JFrame{
 		pnl_nord.add(combo_port_name);
 		pnl_nord.add(btn_refresh_combo);
 		pnl_nord.add(cbo_uart_speeds);
-		pnl_nord.add(btn_broadcast);
 		pnl_nord.add(btn_scan);
-		pnl_nord.add(btn_shotcuts);
-		pnl_nord.add(btn_actions);
-		pnl_nord.add(btn_input_collector);
+		pnl_nord.add(btn_broadcast);
 		
 		this.add(pnl_nord, BorderLayout.NORTH);
 		JPanel pnl_center = new JPanel(new GridLayout(16,  16));
@@ -146,83 +140,9 @@ public class AX12MainIG extends JFrame{
 		});
 		
 		btn_scan.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				btn_scan.setEnabled(false);
-				
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						AX12 ax12 = new AX12(0, currentAx12Link);
-						for (int i=0; i<btns_Ax12s.length; i++) {
-							ax12.setAddress(i);
-							try {
-								SwingUtilities.invokeLater(new BtnEnabling(btns_Ax12s[i], ax12.ping()));
-							} catch (AX12LinkException e1) {
-								e1.printStackTrace();
-							}
-						}
-						SwingUtilities.invokeLater(new BtnEnabling(btn_scan, true));
-					}
-				}).start();
-			}
-		});
-		
-		btn_shotcuts.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				AX12ShortCuts as = new AX12ShortCuts(currentAx12Link);
-				as.pack();
-				as.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				as.setVisible(true);
-			}
-		});
-		
-		btn_actions.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ActionsPanel2020 ap = new ActionsPanel2020(currentAx12Link);
-				ap.pack();
-				ap.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				ap.setVisible(true);
-			}
-		});
-		
-		btn_input_collector.addActionListener(new ActionListener() {
-	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				AX12Link link = getAx12Link();
-				if (link == null) {
-					link = new AX12Link() {
-						
-						@Override
-						public void setBaudRate(int baudRate) throws AX12LinkException {}
-						
-						@Override
-						public byte[] sendCommand(byte[] cmd, int baudRate) throws AX12LinkException {
-							return new byte[0];
-						}
-						
-						@Override
-						public int getBaudRate() {
-							return 115200;
-						}
-						
-						@Override
-						public void enableDtr(boolean enable) throws AX12LinkException {}
-
-						@Override
-						public void enableRts(boolean enable) throws AX12LinkException {}
-					};
-				}
-				AX12InputCollector ic = new AX12InputCollector(link);
-				ic.pack();
-				ic.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				ic.setVisible(true);
+				toggleScan();
 			}
 		});
 	}
@@ -272,6 +192,39 @@ public class AX12MainIG extends JFrame{
 		}
 	}
 	
+	private void toggleScan() {
+		if (this.runningScan != null && this.runningScan.isAlive()) {
+			this.requestScanStop = true;
+		} else {
+			runningScan = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					SwingUtilities.invokeLater(new BtnEnabling(btn_scan, true, "Stop scan 0%"));
+					AX12 ax12 = new AX12(0, currentAx12Link);
+					for (int i=0; i<btns_Ax12s.length; i++) {
+						SwingUtilities.invokeLater(new BtnEnabling(btns_Ax12s[i], false, i+"?"));
+					}
+					for (int i=0; i<btns_Ax12s.length; i++) {
+						if (requestScanStop) {
+							break;
+						}
+						ax12.setAddress(i);
+						try {
+							SwingUtilities.invokeLater(new BtnEnabling(btns_Ax12s[i], ax12.ping(), ""+i));
+							SwingUtilities.invokeLater(new BtnEnabling(btn_scan, true, "Stop scan "+((i*100)/btns_Ax12s.length)+"%"));
+						} catch (AX12LinkException e1) {
+							e1.printStackTrace();
+						}
+					}
+					SwingUtilities.invokeLater(new BtnEnabling(btn_scan, true, "Start scan"));
+					requestScanStop = false;
+					runningScan = null;
+				}
+			});
+			runningScan.start();	
+		}
+	}
+	
 	private class ActionAX12 implements ActionListener {
 		
 		private int address;
@@ -286,7 +239,7 @@ public class AX12MainIG extends JFrame{
 				return;
 			}
 			AX12 ax12 = new AX12(this.address, AX12MainIG.this.currentAx12Link);
-			AX12ControlPanel pnl = new AX12ControlPanel(ax12);
+			AX12ControlPanelv2 pnl = new AX12ControlPanelv2(ax12);
 			pnl.pack();
 			pnl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			pnl.setVisible(true);
@@ -311,15 +264,20 @@ public class AX12MainIG extends JFrame{
 		
 		private JButton btn;
 		private boolean enabled;
+		private String newLabel;
 		
-		public BtnEnabling(JButton btn, boolean enabled) {
+		public BtnEnabling(JButton btn, boolean enabled, String newLabel) {
 			this.btn = btn;
 			this.enabled = enabled;
+			this.newLabel = newLabel;
 		}
 
 		@Override
 		public void run() {
 			btn.setEnabled(enabled);
+			if (this.newLabel != null) {
+				btn.setText(this.newLabel);
+			}
 		}
 		
 	}

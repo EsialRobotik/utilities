@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import cli.AX12MainConsole;
-import cli.cmds.a2017.AX12CmdPince;
-import cli.cmds.a2017.AX12CmdRammasseMinerai;
-import cli.cmds.a2018.AX12CmdBras;
-import cli.cmds.a2018.AX12CmdEau;
 
 public abstract class Ax12Cmd {
 	
@@ -23,10 +19,6 @@ public abstract class Ax12Cmd {
 		commandes.put("a", new Ax12CmdDescription(Ax12CmdAddress.class, "a", "Affiche l'adresse d'Ax12 en cours ou en définit une"));
 		commandes.put("l", new Ax12CmdDescription(Ax12CmdLed.class, "l", "Allume ou éteint la led de l'AX12"));
 		commandes.put("g", new Ax12CmdDescription(Ax12CmdGoal.class, "g", "Définit la position à tenir de l'AX12 en degrés dans [0 ~300]"));
-		//commandes.put("p", new Ax12CmdDescription(AX12CmdPince.class, "p", "Manipulation de la pince de la princesse"));
-		//commandes.put("m", new Ax12CmdDescription(AX12CmdRammasseMinerai.class, "m", "Manipulation du ramasse minerai"));
-		commandes.put("b", new Ax12CmdDescription(AX12CmdBras.class, "b", "Manipule les bras du robot"));
-		commandes.put("e", new Ax12CmdDescription(AX12CmdEau.class, "e", "Manipule l'eau avec el robot"));
 		commandes.put("exit", new Ax12CmdDescription(Ax12CmdExit.class, "exit", "Quitter le programme"));
 	}
 	

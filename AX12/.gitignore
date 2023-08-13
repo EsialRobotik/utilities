@@ -4,3 +4,4 @@ build.properties
 html/data
 /bin/
 .classpath
+.idea

@@ -30,6 +30,7 @@ public class AX12LinkSerial implements AX12Link {
 	public AX12LinkSerial(SerialPort sp, int baudRate, Boolean combinedRxTx) throws AX12LinkException {
 		this.sp = sp;
 		this.lecture = new ArrayList<Byte>();
+		//combinedRxTx = true;
 		this.combinedRxTx = combinedRxTx == null ? false : combinedRxTx;
 		try {
 			this.sp.setDTR(false);
