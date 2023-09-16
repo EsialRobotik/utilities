@@ -4,3 +4,5 @@
 
 Utilise la bibliothèque [RXTX](http://rxtx.qbang.org/wiki/index.php/Download) pour la liaison série
 
+Tadaaaaaa :
+![exemple.png](exemple.png)
