@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "rplidara2.h"
 
 #define PIN_LIDAR_PWM 18

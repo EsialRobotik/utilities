@@ -1,4 +1,4 @@
-#include "rplidara2.h"
+#include "rplidara2.h"lekgjheriogn
 
 RpLidarA2::RpLidarA2(HardwareSerial *serial, bool *rotationSwitch) {
     this->simpleScanRunning = false;
