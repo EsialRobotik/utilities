@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "rplidara2.h"
+#include <ACFDImplementation.hpp>
 
 #define PIN_LIDAR_PWM 18
 #define PWM_CHANNEL 0
@@ -8,10 +9,41 @@
 
 #define UART_PC_SPEED 250000
 
+// Les commandes disponibles sur la liaison série
+#define SERIAL_COMMAND_SCAN_START 's'
+#define SERIAL_COMMAND_SCAN_STOP 'h'
+#define SERIAL_COMMAND_SCAN_MODE 'm'
+#define SERIAL_COMMAND_MOTOR_ROTATION 'r'
+#define SERIAL_COMMAND_INFORMATION 'i'
+#define SERIAL_COMMAND_RESET 'e'
+#define SERIAL_COMMAND_POINT_MIN_QUALITY 'q'
+#define SERIAL_COMMAND_POINT_MAX_DISTANCE 'd'
+#define SERIAL_COMMAND_HEALTH 'l'
+
+/**
+ * @brief Modes de scan disponibles 
+ */
+enum SCAN_MODE {
+  SCAN_MODE_FILTERED, // Filtré = les données du lidar qui respectent les filtres de distance et de qualité sont renvoyées
+  SCAN_MODE_CLUSTERING, // Clustering = les données du lidar sont analysées pour en extraire les groupes de points trouvés et en renvoyer leur barycentre
+};
+
 bool global_motor_spinning = false;
 bool global_motor_spinning_previous = 0;
+SCAN_MODE global_scan_mode = SCAN_MODE_CLUSTERING;
+unsigned long global_clustering_last_execution = 0; // timestamp du dernier clustering effectué
+unsigned long global_clustering_frequency = 200; // période entre 2 exécutions du clustering en ms
 
 RpLidarA2 lidar(&Serial2, &global_motor_spinning);
+ACFDImplementation acfd(
+  /* distance max */ 1500.,
+  /* min points par cluster */ 5,
+  /* max points par cluster */ 30,
+  /* max enemis */ 20,
+  /* distante max entre 2 points mm */ 50.,
+  /* angle max entre 2 pts degrés */ 10.,
+  /* max points vides entre 2 points */ 250
+);
 
 /**
  * @brief Gère le démarrage/l'arrêt de la rotation du lidar
@@ -54,7 +86,7 @@ void handleCmdMaxDistance() {
 }
 
 /**
- * @brief Gère la lecture/l'écriture de la qualité minimum attendu pour chauqe point du lidar
+ * @brief Gère la lecture/l'écriture de la qualité minimum attendu pour chaque point du lidar
  */
 void handleCmdMinQuality() {
   long min = Serial.parseInt();
@@ -63,6 +95,25 @@ void handleCmdMinQuality() {
   } else {
     lidar.setMinQuality((unsigned int) min);
     Serial.println("ok");
+  }
+}
+
+/**
+ * @brief Gère le paramétrage du mode de scan :
+ * c = SCAN_MODE_CLUSTERING
+ * f = SCAN_MODE_FILTERED
+ */
+void handleCmdScanMode() {
+  if (Serial.available()) {
+    char mode = (char) Serial.read();
+    if (mode == 'c') {
+      global_scan_mode = SCAN_MODE_CLUSTERING;
+    } else if (mode == 'f') {
+      global_scan_mode = SCAN_MODE_FILTERED;
+    }
+    Serial.println("ok");
+  } else {
+    Serial.println(global_scan_mode == SCAN_MODE_CLUSTERING ? "clustering" : "filtered");
   }
 }
 
@@ -86,18 +137,18 @@ void handleSerialCommand() {
   }
 
   switch (cmd) {
-    case 's':
+    case SERIAL_COMMAND_SCAN_START:
       lidar.startScan();
       Serial.println("start scan");
     break;
-    case 'r':
+    case SERIAL_COMMAND_MOTOR_ROTATION:
       handleCmdRotation();
     break;
-    case 'i':
+    case SERIAL_COMMAND_INFORMATION:
       lidar.printInfos();
       Serial.println("end infos");
       break;
-    case 'l':
+    case SERIAL_COMMAND_HEALTH:
       int status;
       int code;
       if (lidar.fetchHealth(&status, &code)) {
@@ -108,25 +159,28 @@ void handleSerialCommand() {
         Serial.println("err fetch health");
       }
     break;
-    case 'd':
+    case SERIAL_COMMAND_POINT_MAX_DISTANCE:
       handleCmdMaxDistance();
       break;
-    case 'q':
+    case SERIAL_COMMAND_POINT_MIN_QUALITY:
       handleCmdMinQuality();
       break;
-    case 'h':
+    case SERIAL_COMMAND_SCAN_STOP:
       lidar.stopScan();
       Serial.println("stopscan");
       break;
-    case 'e':
+    case SERIAL_COMMAND_RESET:
       lidar.reset();
       Serial.println("reset");
+      break;
+    case SERIAL_COMMAND_SCAN_MODE:
+      handleCmdScanMode();
       break;
   }
 }
 
 /**
- * @brief Gère le moteur du lidar
+ * @brief Gère la commande moteur PWM du lidar
  */
 void handleMotorControl() {
   if (global_motor_spinning_previous == global_motor_spinning) {
@@ -137,17 +191,37 @@ void handleMotorControl() {
 }
 
 /**
- * @brief Gère la lecture du lidar
+ * @brief Gère le calcul des données du scan à renvoyer sur la liaison série
  */
-void handleScan() {
-  if (lidar.isScanning()) {
-    lidar.scanTick();
-    uint16_t distance;
-    uint16_t angle;
+void handleScanOutput() {
+  if (!lidar.isScanning()) {
+    return;
+  }
+  uint16_t distance;
+  uint16_t angle;
+  if (global_scan_mode == SCAN_MODE_FILTERED) {
     if (lidar.nextPoint(&angle, &distance)) {
       Serial.print(((float)angle)/RPLIDARA2_UNIT_PER_DEGREE_FLOAT);
       Serial.print(';');
       Serial.println(distance);
+    }
+  } else if (global_scan_mode == SCAN_MODE_CLUSTERING) {
+    if (lidar.nextPoint(&angle, &distance)) {
+      double degreeAngle = ((double) angle)/RPLIDARA2_UNIT_PER_DEGREE_FLOAT;
+      acfd.addPoint(degreeAngle, distance);
+      if (global_clustering_last_execution == 0 || global_clustering_last_execution + global_clustering_frequency < millis()) {
+        global_clustering_last_execution = millis();
+        Serial.println("doclustering");
+        acfd.doClustering();
+        Serial.println("printresult");
+        while (acfd.hasNextClusterCoordinates()) {
+          Point p = acfd.nextClusterCoordinates();
+          PolarPoint pp = cartesianToPolar(p, false);
+          Serial.print(pp.angle);
+          Serial.print(';');
+          Serial.println(pp.distance);
+        }
+      }
     }
   }
 }
@@ -162,5 +236,6 @@ void setup() {
 void loop() {
   handleSerialCommand();
   handleMotorControl();
-  handleScan();
+  lidar.scanTick(10);
+  handleScanOutput();
 }

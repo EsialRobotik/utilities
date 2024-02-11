@@ -28,16 +28,78 @@
 class RpLidarA2 {
 
     public:
+        /**
+         * @brief Construit une instance de pilotage du lidar
+         * 
+         * @param serial le port série à utiliser pour communiquer avec le lidar
+         * @param rotationSwitch un pointeur vers un booléen qui gère la mise en rotation du lidar
+         */
         RpLidarA2(HardwareSerial *serial, bool *rotationSwitch);
+
+        /**
+         * @brief Récupère des informations sur le lidar
+         * 
+         */
         void printInfos();
+
         bool fetchHealth(int *status, int *errorCode);
+
+        /**
+         * @brief Indique si le lidar est en train de scaner son environnement
+         * 
+         * @return true 
+         * @return false 
+         */
         bool isScanning();
+
+        /**
+         * @brief Démarre la rotation du lidar
+         * 
+         */
         void startRotation();
+
+        /**
+         * @brief Stope la rotation du lidar
+         * 
+         */
         void stopRotation();
+
+        /**
+         * @brief Indique si le lidar est en rotation
+         * 
+         * @return true 
+         * @return false 
+         */
         bool isRotating();
-        bool scanTick();
+
+        /**
+         * @brief Dépile les données envoyée par le lidar sur la liaison série
+         * à appeler périodiquement et à fréquence élevée pour éviter l'engorgement de la liaison ce qui dégrade l'acquisition
+         * 
+         * @param bucket nombre de points renvoyés par le lidar à lire par tick
+         * @return true 
+         * @return false 
+         */
+        bool scanTick(int bucket = 10);
+
+        /**
+         * @brief Met en route la rotation du lidar et lui envoie la commande de début de scan
+         * 
+         * @return true 
+         * @return false 
+         */
         bool startScan();
+
+        /**
+         * @brief Dit au lidar d'arrêter le scan et arrête sa rotation
+         * 
+         */
         void stopScan();
+
+        /**
+         * @brief Envoie une commande de reset au lidar et arrête sa rotation éventuelle
+         * 
+         */
         void reset();
 
         /**
@@ -73,7 +135,7 @@ class RpLidarA2 {
          * 
          * @param rawangle angle en unité brute qu'il faut convertir
          * @param distance distance en mm
-         * @return true un point a été
+         * @return true un point a été trouvé
          * @return false aucun point n'a été renvoyé
          */
         bool nextPoint(uint16_t *rawangle, uint16_t *distance);

@@ -1,4 +1,4 @@
-#include "rplidara2.h"lekgjheriogn
+#include "rplidara2.h"
 
 RpLidarA2::RpLidarA2(HardwareSerial *serial, bool *rotationSwitch) {
     this->simpleScanRunning = false;
@@ -137,10 +137,13 @@ bool RpLidarA2::isRotating() {
     return *this->rotationSwitch;
 }
 
-bool RpLidarA2::scanTick() {
+bool RpLidarA2::scanTick(int bucket) {
     if (this->simpleScanRunning) {
         bool err = false;
-        if (this->serial->available() > 5) {
+        while (bucket > 0) {
+            bucket--;
+
+            if (this->serial->available() > 5) {
             uint8_t quality = this->serial->read();
             uint8_t angleLow = this->serial->read();
             uint8_t angleHigh = this->serial->read();
@@ -175,6 +178,7 @@ bool RpLidarA2::scanTick() {
         // dans ce cas on fait glisser de déclage pour qu'il se stabilise de lui même
         if (err && this->serial->available() > 0) {
             this->serial->read();
+        }
         }
         return true;
     }
