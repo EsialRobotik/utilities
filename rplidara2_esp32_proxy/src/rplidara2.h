@@ -1,4 +1,8 @@
+#ifndef RPLIDARA2_H_
+#define RPLIDARA2_H_
+
 #include <Arduino.h>
+#include "motorcontrolmanager.hpp"
 
 #define RPLIDARA2_UART_SPEED 115200
 
@@ -32,9 +36,9 @@ class RpLidarA2 {
          * @brief Construit une instance de pilotage du lidar
          * 
          * @param serial le port série à utiliser pour communiquer avec le lidar
-         * @param rotationSwitch un pointeur vers un booléen qui gère la mise en rotation du lidar
+         * @param MotorControlManager un pointeur vers le contrôleur du moteur du lidar
          */
-        RpLidarA2(HardwareSerial *serial, bool *rotationSwitch);
+        RpLidarA2(HardwareSerial *serial, MotorControlManager* MotorControlManager);
 
         /**
          * @brief Récupère des informations sur le lidar
@@ -142,7 +146,7 @@ class RpLidarA2 {
 
     private:
         bool simpleScanRunning;
-        bool *rotationSwitch;
+        MotorControlManager* motorControlManager;
         uint8_t minQualityThreshold;
         uint16_t maxRawDistance;
 
@@ -154,3 +158,5 @@ class RpLidarA2 {
         void sendCmd(char command, char payloadSize, char *payloadData);
         bool readSingleResponse(char *response, char responseSize);
 };
+
+#endif

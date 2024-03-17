@@ -1,11 +1,12 @@
 #include "rplidara2.h"
 
-RpLidarA2::RpLidarA2(HardwareSerial *serial, bool *rotationSwitch) {
+RpLidarA2::RpLidarA2(HardwareSerial *serial, MotorControlManager* motorControlManager)
+    : serial(serial)
+    , motorControlManager(motorControlManager)
+{
     this->simpleScanRunning = false;
-    this->rotationSwitch = rotationSwitch;
     this->bufferReadPosition = 0;
     this->stopRotation();
-    this->serial = serial;
     this->minQualityThreshold = 0;
     this->maxRawDistance = RPLIDARA2_MAX_DISTANCE_UNIT_EXCLUDED;
     serial->begin(RPLIDARA2_UART_SPEED);
@@ -126,15 +127,15 @@ bool RpLidarA2::isScanning() {
 }
 
 void RpLidarA2::startRotation() {
-    *this->rotationSwitch = true;
+    motorControlManager->startRotation();
 }
 
 void RpLidarA2::stopRotation() {
-    *this->rotationSwitch = false;
+    motorControlManager->stopRotation();
 }
 
 bool RpLidarA2::isRotating() {
-    return *this->rotationSwitch;
+    return motorControlManager->isRotating();
 }
 
 bool RpLidarA2::scanTick(int bucket) {

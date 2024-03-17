@@ -1,0 +1,18 @@
+# Proxy Lidar RpLidarA2
+Proxy offrant une couche d'abstraction pour le pilotage et la récupération de data en provenance d'un RpLidar A2.
+Contient un mode de clustering simple pour ne renvoyer que les points intéressants sur la liaison série.
+
+## Utilisation
+Envoyer sur la liaison série en une fois "\<commande>\<argument>\n" :
+| Commande | Argument | Description |
+|--|--|--|
+| s | *aucun* | Démarre le scan |
+| h | *aucun* | Arrête le scan |
+| m | mode de scan | Règle le mode de scan : filtrage simple 'f' ou clustering 'c' |
+| r | activer | Active '1' ou désactive '0' la rotation du moteur |
+| i | *aucun* | Récupère les informations sur le lidar |
+| e | *aucun* | Reset : stope la rotation et reset le lidar |
+| q | qualité | Règle la qualité minimum (1 à 63) en dessous de laquelle tout point sera rejeté des traitements. Argument vide pour avoir la valeur courante |
+| d | distance mm | Règle la distance en mm au dessus de laquelle ignorer les points reçu du lidar. Argument vide pour avoir la valeur courante |
+| l | *aucun* | Renvoie la santé du lidar sous la forme : "<status>/<code>\n"  |
+| f | mode | Renvoie ou règle le format des coordonnées renvoyées : polaire en degrés 'd', polaire en radians 'r' ou cartésien 'c'. Argument vide pour avoir la valeur courante |
