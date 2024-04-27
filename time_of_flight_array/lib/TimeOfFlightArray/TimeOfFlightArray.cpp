@@ -62,7 +62,7 @@ bool TimeOfFlightArray::checkIfPcf8574IsPresent() {
  */
 VL53L1X* TimeOfFlightArray::instanciateTofIfPresentInSlot(int slot) {
     enableSinglePcfSlot(slot, true);
-    delay(25); // On laisse le temps en ToF de booter
+    delay(2); // On laisse le temps en ToF de booter : max 1.2ms d'après la doc
     Wire.beginTransmission(TOF_DEFAULT_ADDRESS);
     int error = Wire.endTransmission();
 
@@ -72,8 +72,22 @@ VL53L1X* TimeOfFlightArray::instanciateTofIfPresentInSlot(int slot) {
     }
 
     VL53L1X* tof = new VL53L1X();
+    if (!(tof->init(true))) {
+        delete tof;
+        return NULL;
+    }
     tof->setAddress(firstTimeOfFlightAddress + slot + 1);
     return tof;
+}
+
+void TimeOfFlightArray::triggerMeasuresNonBlocking() {
+    for (int i=0; i<TOF_MAX_COUNT; i++) {
+        if (tofs[i] == NULL) {
+            distances[i] = 0xFFFF;
+        } else {
+            distances[i] = tofs[i]->read(true);
+        }
+    }
 }
 
 void TimeOfFlightArray::triggerMeasuresBlocking() {
@@ -82,6 +96,14 @@ void TimeOfFlightArray::triggerMeasuresBlocking() {
         distances[i] = 0xFFFF;
         } else {
         distances[i] = tofs[i]->readSingle(true);
+        }
+    }
+}
+
+void TimeOfFlightArray::startContinuous(uint32_t period_ms) {
+    for (int i=0; i<TOF_MAX_COUNT; i++) {
+        if (tofs[i] != NULL) {
+            tofs[i]->startContinuous(period_ms);
         }
     }
 }

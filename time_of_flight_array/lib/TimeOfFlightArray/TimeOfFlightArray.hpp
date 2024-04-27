@@ -29,7 +29,7 @@ class TimeOfFlightArray {
         void init();
 
         /**
-         * @brief Renvoie le nombre de Time Of Flight décectés
+         * @brief Renvoie le nombre de Time Of Flight détectés après l'appel au init()
          * 
          * @return unsigned short 
          */
@@ -66,6 +66,19 @@ class TimeOfFlightArray {
          * Bloque jusqu'à ce que tous les ToF aient répondu
          */
         void triggerMeasuresBlocking();
+
+        /**
+         * @brief Récolte une des mesures continues délcenchées par startContinuous()
+         * 
+         */
+        void triggerMeasuresNonBlocking();
+
+        /**
+         * @brief Démarre l'acquisiiton en continu des ToF
+         * 
+         * @param period_ms 
+         */
+        void startContinuous(uint32_t period_ms);
 
     private:
         /**

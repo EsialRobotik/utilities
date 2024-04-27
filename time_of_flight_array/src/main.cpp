@@ -67,17 +67,20 @@ void setup() {
     }
   }
 
+  tofArray1.startContinuous(20);
+  tofArray2.startContinuous(20);
+
   int connectedTofs = tofArray1.getConnectedTofCount() + tofArray2.getConnectedTofCount();
   Serial.print(connectedTofs);
   Serial.println(" tof(s) connecte(s)");
 }
 
 void loop() {
-  tofArray1.triggerMeasuresBlocking();
-  tofArray2.triggerMeasuresBlocking();
+  tofArray1.triggerMeasuresNonBlocking();
+  tofArray2.triggerMeasuresNonBlocking();
   writeMeasuresOnSerial(&tofArray1);
   Serial.print(";");
   writeMeasuresOnSerial(&tofArray2);
   Serial.println();
-  delay(100);
+  delay(20);
 }
