@@ -14,5 +14,14 @@ Envoyer sur la liaison série en une fois "\<commande>\<argument>\n" :
 | e | *aucun* | Reset : stope la rotation et reset le lidar |
 | q | qualité | Règle la qualité minimum (1 à 63) en dessous de laquelle tout point sera rejeté des traitements. Argument vide pour avoir la valeur courante |
 | d | distance mm | Règle la distance en mm au dessus de laquelle ignorer les points reçu du lidar. Argument vide pour avoir la valeur courante |
-| l | *aucun* | Renvoie la santé du lidar sous la forme : "<status>/<code>\n"  |
-| f | mode | Renvoie ou règle le format des coordonnées renvoyées : polaire en degrés 'd', polaire en radians 'r' ou cartésien 'c'. Argument vide pour avoir la valeur courante |
+| l | *aucun* | Renvoie la santé du lidar sous la forme : "\<status>/\<code>\n"  |
+| f | mode | Renvoie ou règle le format des coordonnées renvoyées. Argument vide pour avoir la valeur courante ou alors envoyer une valeur parmi celles listées dans la colonne 'code' du tableau suivant |
+
+## Formats de retours
+Pendant un scan, chaque ligne renvoyée sur la liaison série correspond à une coordonnée acquise.
+Pour chauqe mode, le Lidar est considéré comme étant à l'origine du repère. 
+| Mode | Code argument | Description | Exemple |
+|--|--|--|--|
+| cartésien | c | Coordonnées cartésiennes en mm.| -7231.14;-1829.55 |
+| polaire degrés| d | Cordonnées polaires dont l'angle est exprimé en degrés et la distance en mm. | 342.80;1802.00 |
+| polaire radians | r | Coordonnées polaires dont l'angle est exprimé en degrés et la distance en mm. | 2.83;1663.00 |

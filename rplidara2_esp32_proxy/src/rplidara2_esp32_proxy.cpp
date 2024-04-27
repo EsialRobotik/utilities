@@ -10,7 +10,7 @@
 #define PWM_FREQ 1000
 #define PWM_RESOLUTION 10
 
-#define UART_PC_SPEED 250000
+#define UART_PC_SPEED 230400
 
 MotorControlManager motorControlManager(PIN_LIDAR_PWM, PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
 RpLidarA2 lidar(&Serial2, &motorControlManager);
