@@ -120,10 +120,20 @@ void CommandManager::handleCmdScanMode() {
     char mode = (char) Serial.read();
     if (mode == 'c') {
         scanManager->setMode(SCAN_MODE_CLUSTERING);
+        Serial.println("ok");
     } else if (mode == 'f') {
         scanManager->setMode(SCAN_MODE_FILTERED);
+        Serial.println("ok");
+    } else {
+      switch (scanManager->getMode()) {
+        case SCAN_MANAGER_SCAN_MODE::SCAN_MODE_CLUSTERING:
+          Serial.println('c');
+          break;
+        case SCAN_MANAGER_SCAN_MODE::SCAN_MODE_FILTERED:
+          Serial.println('f');
+          break;
+      }
     }
-    Serial.println("ok");
   } else {
     Serial.println(scanManager->getMode() == SCAN_MODE_CLUSTERING ? "clustering" : "filtered");
   }

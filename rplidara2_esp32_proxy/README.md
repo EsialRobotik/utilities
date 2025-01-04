@@ -8,7 +8,7 @@ Envoyer sur la liaison série en une fois "\<commande>\<argument>\n" :
 |--|--|--|
 | s | *aucun* | Démarre le scan |
 | h | *aucun* | Arrête le scan |
-| m | mode de scan | Règle le mode de scan : filtrage simple 'f' ou clustering 'c' |
+| m | mode de scan | Règle le mode de scan : filtrage simple 'f' ou clustering 'c' ; Argument vide pour avoir la valeur courante |
 | r | activer | Active '1' ou désactive '0' la rotation du moteur |
 | i | *aucun* | Récupère les informations sur le lidar |
 | e | *aucun* | Reset : stope la rotation et reset le lidar |
@@ -19,7 +19,7 @@ Envoyer sur la liaison série en une fois "\<commande>\<argument>\n" :
 
 ## Formats de retours
 Pendant un scan, chaque ligne renvoyée sur la liaison série correspond à une coordonnée acquise.
-Pour chauqe mode, le Lidar est considéré comme étant à l'origine du repère. 
+Pour chauqe mode, le Lidar est considéré comme étant à l'origine du repère.
 | Mode | Code argument | Description | Exemple |
 |--|--|--|--|
 | cartésien | c | Coordonnées cartésiennes en mm.| -7231.14;-1829.55 |
