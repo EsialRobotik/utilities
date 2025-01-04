@@ -194,10 +194,11 @@ void RpLidarA2::stopScan() {
 }
 
 void RpLidarA2::reset() {
-    this->stopRotation();
+    this->stopScan();
     this->sendCmd(RPLIDARA2_COMMAND_RESET, 0, 0);
     this->simpleScanRunning = false;
     this->flushSerialIn();
+    delay(1000); // La doc du lidar dit d'attendre au moins 2ms avant de lui reparler. En pratique on doit attendre 1 seconds
 }
 
 bool RpLidarA2::nextPoint(uint16_t *rawangle, uint16_t *distance) {

@@ -40,7 +40,11 @@ void CommandManager::handleSerialCommand() {
   delay(5); // on laisse le temps au reste de la commande d'arriver
 
   char cmd = serial->read();
-  if (lidar->isScanning() && cmd != 'h') {
+  if (
+    lidar->isScanning() &&
+    cmd != CommandManagerCommand::SERIAL_COMMAND_SCAN_STOP &&
+    cmd != CommandManagerCommand::SERIAL_COMMAND_RESET
+  ) {
     int drop = 16; // On purge par blocs pour pas trop bloquer le scan
     while (serial->available() > 0 && drop > 0) {
       serial->read();
