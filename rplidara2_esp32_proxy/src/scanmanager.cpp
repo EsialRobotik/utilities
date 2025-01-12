@@ -17,8 +17,8 @@ void ScanManager::heartBeat() {
     if (scanMode == SCAN_MODE_FILTERED) {
         if (lidar->nextPoint(&angle, &distance)) {
             PolarPoint pp;
-            pp.angleIsRad = true;
-            pp.angle = angle;
+            pp.angleIsRad = false;
+            pp.angle = ((double) angle)/RPLIDARA2_UNIT_PER_DEGREE_FLOAT;
             pp.distance = distance;
             printPoint(polarToCartesian(pp));
         }

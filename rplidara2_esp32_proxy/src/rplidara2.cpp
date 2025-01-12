@@ -171,7 +171,7 @@ bool RpLidarA2::scanTick(int bucket) {
 
             // On garde un point s'il est valide, qu'il n'est pas trop loin et qu'il a une bonne qualité
             if (!err && rawDistance <= this->maxRawDistance && quality >= this->minQualityThreshold) {
-                this->raw_distance_buffer[angleUnit] = rawDistance;
+                this->raw_distance_buffer[RPLIDARA2_TOTAL_ANGLE_UNITS - angleUnit - 1] = rawDistance;
             }
         }
 
