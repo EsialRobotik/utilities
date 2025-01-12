@@ -10,7 +10,8 @@
  */
 enum SCAN_MANAGER_SCAN_MODE {
   SCAN_MODE_FILTERED, // Filtré = les données du lidar qui respectent les filtres de distance et de qualité sont renvoyées
-  SCAN_MODE_CLUSTERING, // Clustering = les données du lidar sont analysées pour en extraire les groupes de points trouvés et en renvoyer leur barycentre
+  SCAN_MODE_CLUSTERING, // Clustering = les données du lidar sont analysées pour en extraire les groupes de points trouvés et en renvoyer leur barycentre ligne par ligne
+  SCAN_MODE_CLUSTERING_ONE_LINE, // Clustering sur une ligne = fait la même chose que SCAN_MODE_CLUSTERING mais renvoie tous les clusters toruvés sur une seule
 };
 
 enum SCAN_MANAGER_OUTPUT_FORMAT {
@@ -44,26 +45,35 @@ class ScanManager {
         unsigned long clusteringLastExecution = 0; // timestamp du dernier clustering effectué
         unsigned long clusteringFrequency = 200; // période entre 2 exécutions du clustering en ms
 
-        inline void printPoint(Point p) {
+        /**
+         * @brief écrit un point sur la liaison série en respectant le format de sortie réglé
+         * 
+         * @param p 
+         * @param cr si true, termine la ligne par un retour chariot 
+         */
+        inline void printPoint(Point p, bool cr = true) {
           PolarPoint pp;
           switch (outputFormat) {
               case OUTPUT_FORMAT_CARTESIAN:
                   serial->print(p.x);
                   serial->print(';');
-                  serial->println(p.y);
+                  serial->print(p.y);
               break;
               case OUTPUT_FORMAT_POLAR_RADIAN:
                   pp = cartesianToPolar(p, true);
                   serial->print(pp.angle);
                   serial->print(';');
-                  serial->println(pp.distance);
+                  serial->print(pp.distance);
               break;
               case OUTPUT_FORMAT_POLAR_DEGREES:
                   pp = cartesianToPolar(p, false);
                   serial->print(pp.angle);
                   serial->print(';');
-                  serial->println(pp.distance);
+                  serial->print(pp.distance);
               break;
+          }
+          if (cr) {
+            serial->println();
           }
         }
 };

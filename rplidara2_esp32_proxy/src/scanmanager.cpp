@@ -22,15 +22,24 @@ void ScanManager::heartBeat() {
             pp.distance = distance;
             printPoint(polarToCartesian(pp));
         }
-    } else if (scanMode == SCAN_MODE_CLUSTERING) {
+    } else if (scanMode == SCAN_MODE_CLUSTERING || scanMode == SCAN_MODE_CLUSTERING_ONE_LINE) {
         if (lidar->nextPoint(&angle, &distance)) {
             double degreeAngle = ((double) angle)/RPLIDARA2_UNIT_PER_DEGREE_FLOAT;
             acfd->addPoint(degreeAngle, distance);
             if (clusteringLastExecution == 0 || clusteringLastExecution + clusteringFrequency < millis()) {
                 clusteringLastExecution = millis();
                 acfd->doClustering();
+                bool firstPointWritten = false;
                 while (acfd->hasNextClusterCoordinates()) {
-                    printPoint(acfd->nextClusterCoordinates());
+                    if (firstPointWritten && scanMode == SCAN_MODE_CLUSTERING_ONE_LINE) {
+                        serial->print('#');
+                    } else {
+                        firstPointWritten = true;
+                    }
+                    printPoint(acfd->nextClusterCoordinates(), scanMode == SCAN_MODE_CLUSTERING);
+                }
+                if (scanMode == SCAN_MODE_CLUSTERING_ONE_LINE) {
+                    serial->println();
                 }
             }
         }

@@ -125,21 +125,27 @@ void CommandManager::handleCmdScanMode() {
     if (mode == 'c') {
         scanManager->setMode(SCAN_MODE_CLUSTERING);
         Serial.println("ok");
+    } else if (mode == 'o') {
+        scanManager->setMode(SCAN_MODE_CLUSTERING_ONE_LINE);
+        Serial.println("ok");
     } else if (mode == 'f') {
         scanManager->setMode(SCAN_MODE_FILTERED);
         Serial.println("ok");
     } else {
-      switch (scanManager->getMode()) {
-        case SCAN_MANAGER_SCAN_MODE::SCAN_MODE_CLUSTERING:
-          Serial.println('c');
-          break;
-        case SCAN_MANAGER_SCAN_MODE::SCAN_MODE_FILTERED:
-          Serial.println('f');
-          break;
-      }
+        Serial.println("ko");
     }
   } else {
-    Serial.println(scanManager->getMode() == SCAN_MODE_CLUSTERING ? "clustering" : "filtered");
+    switch (scanManager->getMode()) {
+      case SCAN_MANAGER_SCAN_MODE::SCAN_MODE_CLUSTERING:
+        Serial.println('c');
+        break;
+      case SCAN_MANAGER_SCAN_MODE::SCAN_MODE_CLUSTERING_ONE_LINE:
+        Serial.println('o');
+        break;
+      case SCAN_MANAGER_SCAN_MODE::SCAN_MODE_FILTERED:
+        Serial.println('f');
+        break;
+    }
   }
 }
 

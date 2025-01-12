@@ -69,6 +69,7 @@ class CommandManager
         /**
          * @brief Gère le paramétrage du mode de scan :
          * c = SCAN_MODE_CLUSTERING
+         * o = SCAN_MODE_CLUSTERING_ONE_LINE
          * f = SCAN_MODE_FILTERED
          */
         void handleCmdScanMode();
@@ -77,7 +78,6 @@ class CommandManager
          * @brief Gère le paramétrage de la sortie du scan :
          *  c = coordonnées cartésiennes
          *  d = coordonnées polaires en degrés
-         * 
          */
         void handleCmdOutPutFormatFlavor();
 };
