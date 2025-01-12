@@ -36,6 +36,18 @@ class ScanManager {
          * @brief Méthode à appeler très fréquement pour gérer la transmission ud scan sur la liaison série
          */
         void heartBeat();
+
+        /**
+         * @brief Règle la période entre 2 déclenchements de clustering
+         * 
+         * @param period 
+         */
+        void setClusteringPeriod(unsigned long period);
+
+        /**
+         * @brief Récupère la période entre 2 déclenchements de clustering
+         */
+        unsigned long getClusteringPeriod();
     private:
         Stream* serial;
         RpLidarA2* lidar;

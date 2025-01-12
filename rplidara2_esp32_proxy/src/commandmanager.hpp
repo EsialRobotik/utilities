@@ -7,23 +7,24 @@
 
 // Les commandes disponibles sur la liaison série
 enum CommandManagerCommand {
-    SERIAL_COMMAND_SCAN_START = 's',
-    SERIAL_COMMAND_SCAN_STOP = 'h',
-    SERIAL_COMMAND_SCAN_MODE = 'm',
-    SERIAL_COMMAND_MOTOR_ROTATION = 'r',
-    SERIAL_COMMAND_INFORMATION = 'i',
-    SERIAL_COMMAND_RESET = 'e',
-    SERIAL_COMMAND_POINT_MIN_QUALITY = 'q',
     SERIAL_COMMAND_POINT_MAX_DISTANCE = 'd',
-    SERIAL_COMMAND_HEALTH = 'l',
+    SERIAL_COMMAND_RESET = 'e',
     SERIAL_COMMAND_OUTPUT_FLAVOR = 'f',
+    SERIAL_COMMAND_SCAN_STOP = 'h',
+    SERIAL_COMMAND_INFORMATION = 'i',
+    SERIAL_COMMAND_HEALTH = 'l',
+    SERIAL_COMMAND_SCAN_MODE = 'm',
+    SERIAL_COMMAND_CLUSTERING_PERIOD = 'p',
+    SERIAL_COMMAND_POINT_MIN_QUALITY = 'q',
+    SERIAL_COMMAND_MOTOR_ROTATION = 'r',
+    SERIAL_COMMAND_SCAN_START = 's',
 };
 
 // Les commandes disponibles sur la liaison série
 enum CommandManagerOutputFlavor {
     CARTESIAN = 'c', // Coordonnées cartésiennes
-    POLAR_RADIAN = 'r', // Coordonnées polaires en radians
     POLAR_DEGREES = 'd', // Coordonnées polaires en degrés
+    POLAR_RADIAN = 'r', // Coordonnées polaires en radians
 };
 
 class CommandManager
@@ -80,6 +81,11 @@ class CommandManager
          *  d = coordonnées polaires en degrés
          */
         void handleCmdOutPutFormatFlavor();
+
+        /**
+         * @brief Gère le paramétrage de la période de clustering
+         */
+        void handleCmdClusteringPeriod();
 };
 
 #endif

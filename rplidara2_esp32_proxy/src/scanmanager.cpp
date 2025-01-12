@@ -61,3 +61,11 @@ SCAN_MANAGER_OUTPUT_FORMAT ScanManager::getOutputFormat() {
 void ScanManager::setOutputFormat(SCAN_MANAGER_OUTPUT_FORMAT format) {
     outputFormat = format;
 }
+
+void ScanManager::setClusteringPeriod(unsigned long period) {
+    clusteringFrequency = period;
+}
+
+unsigned long ScanManager::getClusteringPeriod() {
+    return clusteringFrequency;
+}

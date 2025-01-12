@@ -96,6 +96,9 @@ void CommandManager::handleSerialCommand() {
     case CommandManagerCommand::SERIAL_COMMAND_OUTPUT_FLAVOR:
       handleCmdOutPutFormatFlavor();
       break;
+    case CommandManagerCommand::SERIAL_COMMAND_CLUSTERING_PERIOD:
+      handleCmdClusteringPeriod();
+      break;
   }
 }
 
@@ -184,6 +187,20 @@ void CommandManager::handleCmdOutPutFormatFlavor() {
         serial->println("err");
         break;
     }
+  }
+}
+
+void CommandManager::handleCmdClusteringPeriod() {
+  if (serial->available()) {
+    int period = serial->parseInt();
+    if (period < 1) {
+      serial->println("ko - period must be > 0");
+    } else {
+      scanManager->setClusteringPeriod((unsigned long) period);
+      serial->println("ok");
+    }
+  } else {
+    serial->println(scanManager->getClusteringPeriod());
   }
 }
 
