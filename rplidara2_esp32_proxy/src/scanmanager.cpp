@@ -24,9 +24,8 @@ void ScanManager::heartBeat() {
         }
     } else if (scanMode == SCAN_MODE_CLUSTERING || scanMode == SCAN_MODE_CLUSTERING_ONE_LINE) {
         if (lidar->nextPoint(&angle, &distance)) {
-            double degreeAngle = ((double) angle)/RPLIDARA2_UNIT_PER_DEGREE_FLOAT;
-            acfd->addPoint(degreeAngle, distance);
-            if (clusteringLastExecution == 0 || clusteringLastExecution + clusteringFrequency < millis()) {
+            acfd->addPoint(((float) angle)/RPLIDARA2_UNIT_PER_DEGREE_FLOAT, distance);
+            if (clusteringLastExecution == 0 || millis() > clusteringLastExecution + clusteringFrequency) {
                 clusteringLastExecution = millis();
                 acfd->doClustering();
                 bool firstPointWritten = false;

@@ -8,6 +8,10 @@
 
 #define POINTS_TOTAUX POINTS_PAR_DEGRES * 360
 
+/**
+ * @brief ACFD = Array Clustering For Dummies
+ * 
+ */
 class ACFDImplementation {
 
     public:
@@ -93,13 +97,13 @@ class ACFDImplementation {
         int maxClusterCount;
 
         /**
-         * @brief Distance max en millimètres entre 2 points pour qu'ils soient considérés comme appartenant au même cluster
+         * @brief Distance max polaire en millimètres entre 2 points pour qu'ils soient considérés comme appartenant au même cluster
          * 
          */
         float maxDistanceBetween2Pointsmm;
 
         /**
-         * @brief Angle maximum en degrés entre 2 points pour qu'ils soient considérés comme appartenant au même cluster
+         * @brief Angle polaire maximum en degrés entre 2 points pour qu'ils soient considérés comme appartenant au même cluster
          * 
          */
         float maxAngleBetween2PointsDegrees;

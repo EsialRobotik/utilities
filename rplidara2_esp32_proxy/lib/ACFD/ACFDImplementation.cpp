@@ -24,8 +24,8 @@ ACFDImplementation::ACFDImplementation(
     for (int i=POINTS_TOTAUX-1; i>=0; i--) {
         points[i] = 0.;
     }
-    clustersCoordinates = (Point*) malloc(sizeof(Point*) * maxClusterCount);
-    currentClusterPoints = (PolarPoint*) malloc(sizeof(PolarPoint*) * maxPointsPerCluster);
+    clustersCoordinates = (Point*) malloc(sizeof(Point) * maxClusterCount);
+    currentClusterPoints = (PolarPoint*) malloc(sizeof(PolarPoint) * maxPointsPerCluster);
 }
 
 void ACFDImplementation::addPoint(float angle, float distance) {
@@ -92,7 +92,7 @@ void ACFDImplementation::doClustering() {
                 emptyPoints = 0;
                 if ((currentClusterPointsIndex+1) >= minPointsPerCluster) {
                     // Si le cluster courant contient assez de points on le rajoute à la liste de clusters
-                    clustersCoordinates[clusterCoordinatesWriteCursor++] = computeBarycenterFromPolar(currentClusterPoints, currentClusterPointsIndex+1);
+                    clustersCoordinates[++clusterCoordinatesWriteCursor] = computeBarycenterFromPolar(currentClusterPoints, currentClusterPointsIndex+1);
                 }
                 // On reset le cluster de travail
                 currentClusterPointsIndex = -1;
@@ -101,16 +101,15 @@ void ACFDImplementation::doClustering() {
 
         // Si le cluster courant est plein
         if ((currentClusterPointsIndex+1) >= maxPointsPerCluster) {
-            if ((currentClusterPointsIndex+1) >= minPointsPerCluster) {
-                // S'il contient assez de points on le rajoute à la liste de clusters
-                clustersCoordinates[clusterCoordinatesWriteCursor++] = computeBarycenterFromPolar(currentClusterPoints, currentClusterPointsIndex+1);
-            }
+            // Il contient assez de points donc on le rajoute à la liste de clusters
+            clustersCoordinates[++clusterCoordinatesWriteCursor] = computeBarycenterFromPolar(currentClusterPoints, currentClusterPointsIndex+1);
+            
             // On reset le cluster de travail
             currentClusterPointsIndex = -1;
         }
         
         // Si on a atteint la limite de cluster à trouver, on arrête
-        if ((clusterCoordinatesWriteCursor+1) > maxClusterCount) {
+        if ((clusterCoordinatesWriteCursor+1) >= maxClusterCount) {
             currentClusterPointsIndex = -1;
             break;
         }
@@ -118,6 +117,6 @@ void ACFDImplementation::doClustering() {
     
     // Si la lecture s'est arrêtée alors qu'on remplissait un cluster, on le rajoute s'il contient le nombre minimum de points requis
     if ((currentClusterPointsIndex+1) >= minPointsPerCluster) {
-        clustersCoordinates[clusterCoordinatesWriteCursor++] = computeBarycenterFromPolar(currentClusterPoints, currentClusterPointsIndex+1);
+        clustersCoordinates[++clusterCoordinatesWriteCursor] = computeBarycenterFromPolar(currentClusterPoints, currentClusterPointsIndex+1);
     }
 }

@@ -15,7 +15,7 @@
 MotorControlManager motorControlManager(PIN_LIDAR_PWM, PWM_CHANNEL, PWM_FREQ, PWM_RESOLUTION);
 RpLidarA2 lidar(&Serial2, &motorControlManager);
 ACFDImplementation acfd(
-  /* distance max, on met une valeur très élevée exprès car c'ets géré en amont par le lidar */ 10000.,
+  /* distance max, on met une valeur très élevée exprès car c'est géré en amont par le lidar */ 10000.,
   /* min points par cluster */ 5,
   /* max points par cluster */ 30,
   /* max enemis */ 20,
