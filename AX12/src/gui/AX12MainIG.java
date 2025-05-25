@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -241,9 +242,12 @@ public class AX12MainIG extends JFrame{
 			AX12 ax12 = new AX12(this.address, AX12MainIG.this.currentAx12Link);
 			AX12ControlPanelv2 pnl = new AX12ControlPanelv2(ax12);
 			pnl.pack();
+			Dimension d = pnl.getSize();
+			d.setSize(d.getWidth()+25, d.getHeight()+25);
+			pnl.setSize(d);
 			pnl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			pnl.setVisible(true);
-		}	
+		}
 	}
 	
 	private class SerialPortWrapper {

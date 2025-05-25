@@ -376,7 +376,7 @@ public class AX12ControlPanelv2 extends JFrame {
 	}
 	
 	private void majLibAngle() {
-		this.lib_angle.setText("<html>Angle<br>"+(slider_angle.getValue()/10.)+"°</html>");
+		this.lib_angle.setText("<html>Angle :<br>"+(slider_angle.getValue()/10.)+"°</html>");
 	}
 	
 	private void majLibMargeAngle() {

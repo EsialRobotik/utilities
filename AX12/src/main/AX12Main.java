@@ -1,8 +1,6 @@
 package main;
 
 import java.awt.GraphicsEnvironment;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -38,13 +36,6 @@ public class AX12Main {
 			cons.setSerialCommunicator(ig.getAx12Link());
 		}
 
-		try {
-			System.out.println("Serveur HTTP lancé ; wwwroot : " + parsedArgs.htmlDir.getCanonicalPath() + " ; jsondir : "+parsedArgs.jsonDir.getCanonicalPath());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		AX12LinkSerial link = cons.getAx12SerialCommunicator();
 		if (link != null) {
 			link.enableDtr(false);
@@ -70,33 +61,11 @@ public class AX12Main {
             cmd = parser.parse(options, args);
             
             Args a = new Args();
-            a.jsonDir = new File("./html/data");
-            a.htmlDir = new File("./html");
             a.forceHeadless = cmd.hasOption("headless");
             a.serialPort = null;
             
             if (cmd.hasOption("serial-port")) {
             	a.serialPort = cmd.getOptionValue("serial-port");
-            }
-            
-            if(cmd.hasOption("json-dir")) {
-            	a.jsonDir = new File(cmd.getOptionValue("json-dir"));
-            	if (!a.jsonDir.exists()) {
-            		throw new IllegalArgumentException("Le répertoire "+a.jsonDir.getPath()+" n'existe pas");
-            	}
-            	if (!a.jsonDir.isDirectory()) {
-            		throw new IllegalArgumentException("Le chamin donné n'est pas un répertoire "+a.jsonDir.getPath());
-            	}
-            }
-            
-            if(cmd.hasOption("html-dir")) {
-            	a.htmlDir = new File(cmd.getOptionValue("html-dir"));
-            	if (!a.htmlDir.exists()) {
-            		throw new IllegalArgumentException("Le répertoire "+a.jsonDir.getPath()+" n'existe pas");
-            	}
-            	if (!a.htmlDir.isDirectory()) {
-            		throw new IllegalArgumentException("Le chamin donné n'est pas un répertoire "+a.jsonDir.getPath());
-            	}
             }
             return a;
         } catch (ParseException e) {
@@ -111,8 +80,6 @@ public class AX12Main {
 	}
 	
 	protected static class Args {
-		public File jsonDir;
-		public File htmlDir;
 		public boolean forceHeadless;
 		public String serialPort;
 	}
