@@ -45,6 +45,13 @@ void Ax12ToPwmServo::heartBeat() {
                 this->sendResponse(0, &rotating, 1);
                 return;
             }
+            case AX12Registers::AX12_RAM_MOVING_SPEED:
+            {
+                // On invente une vitesse si la rotation est encore présumée en cours
+                unsigned char rotating[] = {0, millis() >= this->lastTargetReachTimestamp ? 0x00 : 0x01};
+                this->sendResponse(0, rotating, 2);
+                return;
+            }
             case AX12Registers::AX12_RAM_PRESENT_POSITION:
             {
                 unsigned char position[2];

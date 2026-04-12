@@ -38,6 +38,10 @@ bool ledToggle = false; // sert à faire une bascule entre deux couleurs sur la 
 unsigned long lastHeartBeatTime = 0; // timestamp qui marque la dernière pulsation du heartbeat
 unsigned long nextIdleTime = 0; // timestamp de repère pour basculer la couleur de la led entre "en activité" et "en attente"
 uint32_t lastColor = 0; // Dernière couleur envoyée à la LED pour éviter de l'appeler quand la couleur n'a pas changé
+uint32_t color_wip = strip.Color(255, 0, 255); // Couluer pour indiquer un travail ne cours
+uint32_t color_heart_beat_1 = strip.Color(249, 66, 158); // Couleur 1 du heart beat pour indiquer que le microcontrôleur est vivant
+uint32_t color_heart_beat_2 = strip.Color(255, 0, 127); // Couleur 2 du heart beat pour indiquer que le microcontrôleur est vivant
+uint32_t breath_period_ms = 3000; // Temps en millisecondes entre 2 "respirations" de heartbeat
 
 void setup() {
     Serial.begin(115200);
@@ -59,7 +63,7 @@ void loop() {
     }
 
     // Par défaut c'est la couleur "travail en cours" qui est paramétrée
-    uint32_t currentColor = strip.Color(255, 0, 255);
+    uint32_t currentColor = color_wip;
 
     // Si une instruction valide est trouvée
     if (ax12InstructionListener.heartBeat()) {
@@ -72,7 +76,11 @@ void loop() {
         nextIdleTime = millis() + 100;
     // Pas d'instruction, alors on gère juste le heartbeat
     } else if (millis() > nextIdleTime) {
-        currentColor = ledToggle ? strip.Color(0, 255, 0) : strip.Color(255, 0, 0);
+        uint32_t timeref = millis() - nextIdleTime;
+        uint32_t timerelative = timeref % breath_period_ms;
+        bool breath_direction = (timeref / breath_period_ms % 2) == 1;
+        unsigned long ratio = map(timerelative, breath_direction ? breath_period_ms : 0, breath_direction ? 0 : breath_period_ms, 0, 100);
+        currentColor = strip.Color((int)(2.49 * (float)ratio), (int) (0.66 * (float)ratio), (int) (1.58 * (float)ratio));
     }
 
     // Mise à jour de la LED si la couleur a changé
