@@ -32,8 +32,8 @@ void Ax12ToPwmServo::heartBeat() {
                 int goal = (int) ((rawGoal / 1023.) * 180.);
                 int previousGoal = this->servo.read();
                 this->servo.write(goal);
-                // On prend une vitesse de rotation des servos de 20ms par degré pour calculer la date de fin de rotation
-                this->lastTargetReachTimestamp = millis() + (20 * abs(previousGoal - goal));
+                // On prend une vitesse de rotation des servos de 2ms par degré pour calculer la date de fin de rotation
+                this->lastTargetReachTimestamp = millis() + (2 * abs(previousGoal - goal));
                 this->sendResponse(0, NULL, 0);
                 return;
         }
