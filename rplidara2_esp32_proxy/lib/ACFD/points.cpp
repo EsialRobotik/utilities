@@ -11,12 +11,12 @@ Point polarToCartesian(PolarPoint pp) {
 
 PolarPoint cartesianToPolar(Point p, bool angleIsRad) {
     float distance = sqrt(p.x * p.x + p.y * p.y);
-    float angle = 0.;
+    float angle;
     if (p.x == 0.) {
         if (p.y > 0) {
             angle = M_PI / 2.;
         } else {
-            angle = M_PI / 1.5;
+            angle = M_PI * 1.5;
         }
     } else {
         angle = atan(p.y / p.x);
@@ -30,7 +30,7 @@ PolarPoint cartesianToPolar(Point p, bool angleIsRad) {
         angle += M_PI;
     }
     PolarPoint pp;
-    pp.angle = angleIsRad ? angle : angle * (180 / M_PI);
+    pp.angle = angleIsRad ? angle : angle * (180. / M_PI);
     pp.distance = distance;
     pp.angleIsRad = angleIsRad;
     return pp;
