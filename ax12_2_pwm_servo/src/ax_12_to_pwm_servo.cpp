@@ -6,6 +6,7 @@ Ax12ToPwmServo::Ax12ToPwmServo(Ax12InstructionListener* instructionListener, Har
 , ax12Id(ax12Id)
 , servoGpio(servoGpio)
 , lastTargetReachTimestamp(0)
+, lastGoal(0)
 {
 }
 
@@ -28,12 +29,13 @@ void Ax12ToPwmServo::heartBeat() {
     } else if (instr.instr == AX12Command::AX12_INSTR_WRITE_DATA) {
         switch (instr.reg) {
             case AX12Registers::AX12_RAM_GOAL_POSITION:
-                float rawGoal = (float) instr.dataToUShort();
+                lastGoal = instr.dataToUShort();
+                float rawGoal = (float) lastGoal;
                 int goal = (int) ((rawGoal / 1023.) * 180.);
                 int previousGoal = this->servo.read();
                 this->servo.write(goal);
-                // On prend une vitesse de rotation des servos de 2ms par degré pour calculer la date de fin de rotation
-                this->lastTargetReachTimestamp = millis() + (2 * abs(previousGoal - goal));
+                // On prend une vitesse de rotation des servos de 1ms par degré pour calculer la date de fin de rotation
+                this->lastTargetReachTimestamp = millis() + (1 * abs(previousGoal - goal));
                 this->sendResponse(0, NULL, 0);
                 return;
         }
@@ -55,9 +57,8 @@ void Ax12ToPwmServo::heartBeat() {
             case AX12Registers::AX12_RAM_PRESENT_POSITION:
             {
                 unsigned char position[2];
-                unsigned short pos = (unsigned short) ((((float)this->servo.read()) / 180.) * 1024.);
-                position[0] = pos & 0xFF;
-                position[1] = (pos >> 8) & 0xFF;
+                position[0] = lastGoal & 0xFF;
+                position[1] = (lastGoal >> 8) & 0xFF;
                 this->sendResponse(0, position, 2);
                 return;
             }

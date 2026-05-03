@@ -30,6 +30,9 @@ class Ax12ToPwmServo {
         /// @brief GPIO à utiliser pour piloter le servomoteur
         int servoGpio;
 
+        /// @brief Dernière valeur de position connue
+        unsigned short lastGoal;
+
         /// @brief Référence à l'écouteur d'instructions ax12
         Ax12InstructionListener* instructionListener;
 
